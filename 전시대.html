@@ -1,51 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>전시대</title>
-
-<style>
-
 /* =========================================================
    기본
 ========================================================= */
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html {
-  font-size: 100%;
-  --font-scale: 1;
-}
-
 body {
   margin: 0;
   padding: 0;
-
-  font-family:
-    Arial,
-    "Noto Sans KR",
-    sans-serif;
-
+  font-family: Arial, "Noto Sans KR", sans-serif;
   background:
-    radial-gradient(
-      circle at top,
-      #252525 0%,
-      #111 55%,
-      #080808 100%
-    );
-
-  color: #f5f5f5;
-
+    radial-gradient(circle at top, #252525 0%, #111 55%, #080808 100%);
+  color: #fff;
   min-height: 100vh;
-
-  transition:
-    background .25s,
-    color .25s;
+  transition: background .25s, color .25s;
 }
 
 body.light {
@@ -53,6 +18,58 @@ body.light {
   color: #222;
 }
 
+/* =========================================================
+   신청용 메인화면 - 봉사 요일 선택
+========================================================= */
+
+.volunteer-schedule-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.volunteer-schedule-btn {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 55px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #3374A9;
+  color: #fff;
+
+  font-size: calc(24px * var(--font-scale));
+  font-weight: 700;
+
+  text-align: left;
+  padding: 0 20px;
+
+  cursor: pointer;
+}
+
+.volunteer-schedule-btn::after {
+  content: "›";
+
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+
+  margin-left: 12px;
+}
+
+.volunteer-schedule-btn:active {
+  transform: scale(0.99);
+}
 
 /* =========================================================
    상단
@@ -60,13 +77,10 @@ body.light {
 
 .top-bar {
   position: fixed;
-
   top: 0;
   left: 0;
   right: 0;
-
   height: 60px;
-
   z-index: 1000;
 
   display: flex;
@@ -74,40 +88,29 @@ body.light {
   justify-content: center;
 
   background: #18324a;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(255,255,255,.10);
 }
 
 .top-title {
   color: #fff;
-
   font-size: 35px;
   font-weight: 800;
-
-  letter-spacing: .04em;
+  letter-spacing: 0.04em;
 }
 
 .top-button {
   position: absolute;
-
   top: 10px;
-
   width: 42px;
   height: 42px;
-
   border-radius: 12px;
 
   border: 0;
-
   background: #234563;
-
   color: #fff;
 
   font-size: 25px;
-
   line-height: 20px;
-
   cursor: pointer;
 
   display: flex;
@@ -123,7 +126,6 @@ body.light {
   right: 8px;
 }
 
-
 /* =========================================================
    본문
 ========================================================= */
@@ -131,15 +133,11 @@ body.light {
 .main {
   padding-top: 80px;
   padding-bottom: 80px;
-
-  min-height: 100vh;
 }
 
 .view {
   display: none;
-
-  padding:
-    0 14px 30px;
+  padding: 0 14px 30px;
 }
 
 .view.active {
@@ -147,123 +145,12 @@ body.light {
 }
 
 .page-title {
-  margin:
-    0 0 15px;
-
+  margin: 0 0 15px;
   text-align: center;
-
-  font-size:
-    calc(25px * var(--font-scale));
-
+  font-size: calc(25px * var(--font-scale));
   font-weight: 800;
-
   letter-spacing: -1px;
 }
-
-
-/* =========================================================
-   알림
-========================================================= */
-
-.notice-section {
-  width: 100%;
-  max-width: 900px;
-
-  margin: 0 auto;
-}
-
-.notice-card {
-  padding: 18px 16px;
-
-  border-radius: 14px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  background:
-    rgba(255,255,255,.07);
-}
-
-body.light .notice-card {
-  background: #fff;
-  border-color: #ddd;
-}
-
-.notice-line {
-  min-height: 44px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 8px 10px;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-  font-size:
-    calc(17px * var(--font-scale));
-
-  line-height: 1.45;
-}
-
-.notice-line:last-child {
-  border-bottom: 0;
-}
-
-
-/* =========================================================
-   신청 날짜
-========================================================= */
-
-.apply-date-box {
-  width: 100%;
-  max-width: 900px;
-
-  margin:
-    0 auto 16px;
-
-  padding: 14px 16px;
-
-  border-radius: 12px;
-
-  background:
-    rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.10);
-
-  text-align: left;
-}
-
-body.light .apply-date-box {
-  background: #fff;
-  border-color: #ddd;
-}
-
-.apply-date {
-  font-size:
-    calc(20px * var(--font-scale));
-
-  font-weight: 800;
-
-  line-height: 1.5;
-}
-
-.apply-time {
-  margin-top: 2px;
-
-  font-size:
-    calc(16px * var(--font-scale));
-
-  color: #aaa;
-
-  line-height: 1.5;
-}
-
-body.light .apply-time {
-  color: #777;
-}
-
 
 /* =========================================================
    선택 인원
@@ -271,26 +158,17 @@ body.light .apply-time {
 
 .count-box {
   width: 100%;
-  max-width: 900px;
-
-  margin:
-    0 auto 18px;
+  max-width: 600px;
+  margin: 0 auto 18px;
 
   padding: 13px 15px;
 
   border-radius: 12px;
-
-  background:
-    rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
 
   text-align: center;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale)) !important;
   font-weight: 700;
 }
 
@@ -299,22 +177,17 @@ body.light .count-box {
   border-color: #ddd;
 }
 
-
 /* =========================================================
-   신청자 명단 - 3열
+   봉사자 선택 - 4열
 ========================================================= */
 
 .name-grid {
   width: 100%;
   max-width: 900px;
-
   margin: 0 auto;
 
   display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -322,29 +195,20 @@ body.light .count-box {
   min-height: 58px;
 
   border-radius: 10px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  background:
-    rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.07);
 
   color: inherit;
-
   cursor: pointer;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 5px;
 
   padding: 7px 4px;
 
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 600;
 
   transition:
@@ -358,11 +222,8 @@ body.light .count-box {
 }
 
 .name-card.selected {
-  background:
-    rgba(111,168,216,.16);
-
-  border:
-    3px solid #6FA8D8;
+  background: rgba(111,168,216,.16);
+  border: 3px solid #6FA8D8;
 }
 
 body.light .name-card {
@@ -372,38 +233,28 @@ body.light .name-card {
 
 body.light .name-card.selected {
   background: #eef5fb;
-  border:
-    3px solid #3F6F9F;
+  border: 3px solid #3F6F9F;
 }
 
 .check-mark {
   width: 18px;
   height: 18px;
-
-  flex:
-    0 0 18px;
+  flex: 0 0 18px;
 
   border-radius: 50%;
-
-  border:
-    2px solid #777;
+  border: 2px solid #777;
 
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
 
-  font-size:
-    calc(11px * var(--font-scale));
-
+  font-size: calc(11px * var(--font-scale));
   font-weight: 900;
 }
 
 .name-card.selected .check-mark {
   border-color: #6FA8D8;
-
   background: #6FA8D8;
-
   color: #fff;
 }
 
@@ -416,159 +267,15 @@ body.light .name-card.selected .check-mark {
   grid-column: 1 / -1;
 
   padding: 35px 10px;
-
   text-align: center;
 
   color: #aaa;
-
-  font-size:
-    calc(15px * var(--font-scale));
+  font-size: calc(15px * var(--font-scale));
 }
 
 body.light .name-loading {
   color: #777;
 }
-
-
-/* =========================================================
-   전시대 신청 명단 열기 버튼
-========================================================= */
-
-.apply-name-open-wrap {
-  width: 100%;
-  max-width: 900px;
-
-  margin: 0 auto 18px;
-}
-
-.apply-name-open-button {
-  width: 100%;
-
-  min-height: 48px;
-
-  border: 0;
-
-  border-radius: 10px;
-
-  background: #4285f4;
-
-  color: #fff;
-
-  font-size:
-    calc(17px * var(--font-scale));
-
-  font-weight: 800;
-
-  cursor: pointer;
-}
-
-
-/* =========================================================
-   신청 완료 버튼
-========================================================= */
-
-.apply-complete-wrap {
-  width: 100%;
-  max-width: 900px;
-
-  margin:
-    18px auto 25px;
-}
-
-.apply-complete-button {
-  width: 100%;
-
-  min-height: 48px;
-
-  border: 0;
-
-  border-radius: 10px;
-
-  background: #4285f4;
-
-  color: #fff;
-
-  font-size:
-    calc(17px * var(--font-scale));
-
-  font-weight: 800;
-
-  cursor: pointer;
-}
-
-
-/* =========================================================
-   현재 신청자
-========================================================= */
-
-.current-applicants {
-  width: 100%;
-  max-width: 900px;
-
-  margin: 0 auto 25px;
-}
-
-.current-title {
-  margin-bottom: 10px;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
-  font-weight: 800;
-}
-
-.current-names {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 7px;
-}
-
-.current-name {
-  min-height: 40px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding:
-    5px 3px;
-
-  border-radius: 10px;
-
-  border:
-    1px solid #555;
-
-  background:
-    rgba(255,255,255,.04);
-
-  font-size:
-    calc(16px * var(--font-scale));
-
-  font-weight: 600;
-
-  white-space: nowrap;
-}
-
-body.light .current-name {
-  color: #777;
-  border-color: #ccc;
-  background: #fff;
-}
-
-.current-empty {
-  grid-column: 1 / -1;
-
-  padding: 25px 10px;
-
-  text-align: center;
-
-  color: #999;
-}
-
 
 /* =========================================================
    관리자
@@ -577,67 +284,65 @@ body.light .current-name {
 .admin-section {
   width: 100%;
   max-width: 900px;
-
   margin: 0 auto;
 }
 
 .admin-count {
   text-align: center;
-
   margin-bottom: 15px;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(16px * var(--font-scale));
   font-weight: 700;
 }
 
-
-/* =========================================================
-   미배정 신청자
-========================================================= */
-
 .admin-names {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .admin-name {
-  min-height: 48px;
-
-  padding:
-    6px 5px;
+  height: 40px;
+  padding: 0 13px;
 
   border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.15);
 
-  border:
-    1px solid rgba(255,255,255,.15);
-
-  background:
-    rgba(255,255,255,.08);
-
+  background: rgba(255,255,255,.08);
   color: inherit;
 
   cursor: pointer;
-
-  font-size:
-    calc(17px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 600;
 }
 
 .admin-name.selected {
-  background:
-    rgba(111,168,216,.16);
+  background: rgba(111,168,216,.16);
+  color: inherit;
+  border: 3px solid #6FA8D8;
+}
 
-  border:
-    3px solid #6FA8D8;
+body:not(.light) .admin-name {
+  color: #fff;
+}
+
+body:not(.light) .admin-name.selected {
+  color: #fff;
+}
+
+.admin-add-button {
+  padding: 10px 13px;
+  border-radius: 9px;
+  border: 1px dashed #4285f4;
+  background: transparent;
+  color: #4285f4;
+  cursor: pointer;
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 700;
+}
+
+body.light .admin-add-button {
+  background: #fff;
 }
 
 body.light .admin-name {
@@ -647,104 +352,101 @@ body.light .admin-name {
 
 body.light .admin-name.selected {
   background: #eef5fb;
-
-  border:
-    3px solid #3F6F9F;
+  color: inherit;
+  border: 3px solid #3F6F9F;
 }
-
-
-/* =========================================================
-   관리자 직접 추가
-========================================================= */
-
-.admin-add-button {
-  min-height: 44px;
-
-  padding:
-    7px 13px;
-
-  border-radius: 9px;
-
-  border:
-    1px dashed #4285f4;
-
-  background: transparent;
-
-  color: #4285f4;
-
-  cursor: pointer;
-
-  font-size:
-    calc(15px * var(--font-scale));
-
+.admin-selection-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background: #3374A9;
+  color: #fff;
+  font-size: 13px;
   font-weight: 700;
 }
 
-body.light .admin-add-button {
-  background: #fff;
+.confirm-group-button {
+  display: block;
+  margin: -10px auto 22px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 9px;
+  background: #455A64;
+  color: #fff;
+  cursor: pointer;
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 700;
+  opacity: .45;
 }
 
-
-/* =========================================================
-   그룹 추가
-========================================================= */
+.confirm-group-button:enabled {
+  opacity: 1;
+}
 
 .group-controls {
   display: flex;
-
   justify-content: center;
-
+  gap: 8px;
   margin-bottom: 18px;
+}
+
+.service-order-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 20px;
+  background: #A83232;
+  color: #fff;
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .add-group-button {
   width: 100%;
-
-  min-height: 48px;
+  height: 66px;
 
   border: 0;
-
   border-radius: 10px;
 
-  padding:
-    12px 20px;
+  padding: 0 20px;
 
-  background: #4285f4;
-
+  background: #3374A9;
   color: #fff;
 
-  font-size:
-    calc(16px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 700;
 
   cursor: pointer;
 }
 
-
-/* =========================================================
-   그룹
-========================================================= */
-
 .groups {
   display: flex;
-
   flex-direction: column;
-
   gap: 14px;
 }
 
 .group-card {
-  padding:
-    15px 14px;
+  padding: 15px 14px;
 
   border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.07);
+}
 
-  border:
-    1px solid rgba(255,255,255,.12);
+/* 그룹 카드 - 인원 / 봉사장소 50 : 50 */
+.group-card .group-count-select,
+.group-card .group-location-select {
+  width: 100%;
+  box-sizing: border-box;
+}
 
-  background:
-    rgba(255,255,255,.07);
+.group-card .group-count-select,
+.group-card .group-location-select {
+  flex: 1 1 0 !important;
 }
 
 body.light .group-card {
@@ -754,367 +456,381 @@ body.light .group-card {
 
 .group-header {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   margin-bottom: 10px;
 }
 
 .group-title {
-  font-size:
-    calc(19px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 800;
-
-  line-height:
-    calc(20px * var(--font-scale));
+  line-height: calc(20px * var(--font-scale));
 }
 
-.group-buttons {
-  display: flex;
-
-  gap: 6px;
-}
-
-.group-action {
+.delete-group {
   border: 0;
-
   background: transparent;
-
   color: #ff7777;
 
-  font-size:
-    calc(15px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   cursor: pointer;
 }
 
-
-/* =========================================================
-   그룹 6자리
-========================================================= */
-
 .group-slots {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  margin-top: 5px;
 }
 
 .group-slot {
-  min-height: 46px;
+  height: 40px;
+  min-height: 40px;
 
   border-radius: 9px;
-
-  border:
-    1px dashed #777;
-
-  background: transparent;
-
-  color: inherit;
+  border: 1px dashed #777;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   text-align: center;
+  padding: 6px 4px;
 
-  padding:
-    6px 4px;
-
-  font-size:
-    calc(17px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 600;
+  color: inherit;
 
   cursor: pointer;
 }
 
 .group-slot.filled {
-  border:
-    3px solid #6FA8D8;
-
-  background:
-    rgba(111,168,216,.16);
+  border: 3px solid #6FA8D8;
+  background: rgba(111,168,216,.16);
 }
 
 body.light .group-slot.filled {
-  border:
-    3px solid #3F6F9F;
-
-  background:
-    #eef5fb;
+  border: 3px solid #3F6F9F;
+  background: #eef5fb;
 }
 
 .group-slot.empty {
   color: #888;
 }
 
-
 /* =========================================================
-   임명
+   관리자 - 배정 확정 / 봉사 그룹 추가 버튼
 ========================================================= */
 
-.appoint-section {
+.admin-action-buttons {
   width: 100%;
-  max-width: 900px;
-
-  margin: 0 auto;
-}
-
-.appoint-list {
   display: flex;
-
   flex-direction: column;
-
-  gap: 14px;
-}
-
-.appoint-card {
-  padding:
-    15px 14px;
-
-  border-radius: 14px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  background:
-    rgba(255,255,255,.07);
-}
-
-body.light .appoint-card {
-  background: #fff;
-  border-color: #ddd;
-}
-
-.appoint-title {
-  margin-bottom: 10px;
-
-  font-size:
-    calc(19px * var(--font-scale));
-
-  font-weight: 800;
-}
-
-.appoint-members {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
   gap: 8px;
+  margin: 14px 0 18px;
 }
 
-.appoint-person {
-  min-height: 44px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 9px;
-
-  border:
-    1px solid #555;
-
-  background:
-    transparent;
-
-  font-size:
-    calc(17px * var(--font-scale));
-
-  font-weight: 600;
-}
-
-.appoint-person.filled {
-  border:
-    3px solid #6FA8D8;
-
-  background:
-    rgba(111,168,216,.16);
-}
-
-body.light .appoint-person {
-  border-color: #ccc;
-  color: #777;
-}
-
-body.light .appoint-person.filled {
-  border:
-    3px solid #3F6F9F;
-
-  background:
-    #eef5fb;
-
-  color: #222;
-}
-
-.appoint-empty {
-  padding:
-    35px 10px;
+.admin-action-guide {
+  width: 100%;
+  margin-bottom: 8px;
 
   text-align: center;
 
-  color: #999;
-
-  font-size:
-    calc(15px * var(--font-scale));
+  font-size: calc(14px * var(--font-scale));
+  font-weight: 600;
+  color: #777;
 }
 
-
-/* =========================================================
-   하단 메뉴
-========================================================= */
-
-.bottom-nav {
-  position: fixed;
-
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  height: 60px;
-
-  z-index: 1000;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  background: #18324a;
-
-  border-top:
-    1px solid rgba(255,255,255,.10);
+.admin-action-button-row {
+  width: 100%;
+  display: flex;
+  gap: 8px;
 }
 
-body.light .bottom-nav {
-  background: #18324a;
-
-  border-top:
-    1px solid rgba(255,255,255,.10);
+.admin-action-button-row .add-group-button {
+  flex: 2 1 0;
+  width: auto;
+  min-width: 0;
 }
 
-.nav-button {
+.admin-action-button-row .admin-stop-button {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+
+  height: 66px;
+  min-height: 66px;
+  margin: 0;
+
   border: 0;
+  border-radius: 12px;
 
-  background: transparent;
-
+  background: #B83232;
   color: #fff;
 
-  font-size:
-    calc(17px * var(--font-scale));
-
-  font-weight: 700;
+  font-size: calc(17px * var(--font-scale));
+  font-weight: 800;
 
   cursor: pointer;
 }
 
-.nav-button:not(:last-child) {
-  border-right:
-    1px solid rgba(255,255,255,.25);
+.admin-action-button-row .add-group-button {
+  height: 66px;
+  min-height: 66px;
+  margin: 0;
+  border-radius: 12px;
+  font-size: calc(17px * var(--font-scale));
+  font-weight: 800;
 }
 
-.nav-button.active {
-  color: #fff;
-}
+@media (max-width: 600px) {
+  .applicant-manage-buttons {
+    gap: 8px;
+  }
 
+  .applicant-manage-buttons .applicant-cancel-button {
+    height: 46px;
+    font-size: 25px !important;
+  }
+}
 
 /* =========================================================
-   설정
+   봉사용 일정 선택
 ========================================================= */
 
-.settings-panel {
-  position: fixed;
+.service-schedule-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-  top: 64px;
-  right: 10px;
+.service-schedule-button {
+  width: 100%;
+  min-height: 55px;
+  padding: 0 20px;
 
-  width: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  padding: 15px;
+  border: 0;
+  border-radius: 12px;
 
-  z-index: 1100;
+  background: #234563;
+  color: #fff;
+
+  font-size: calc(24px * var(--font-scale));
+  font-weight: 700;
+  text-align: left;
+
+  cursor: pointer;
+}
+.service-schedule-button.selected {
+  background: #3377aa;
+}
+
+.service-schedule-arrow {
+  flex-shrink: 0;
+  margin-left: 12px;
+
+  font-size: 24px;
+  line-height: 1;
+}
+
+.service-management-area {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   봉사하기
+========================================================= */
+
+.service-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.service-info {
+  text-align: center;
+  font-size: calc(18px * var(--font-scale));
+  color: #aaa;
+}
+
+body.light .service-info {
+  color: #777;
+}
+
+body.light .service-conductor {
+  color: #777;
+}
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-card {
+  padding: 16px;
 
   border-radius: 14px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  background:
-    rgba(30,30,30,.98);
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.35);
-
-  display: none;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.07);
 }
 
-.settings-panel.show {
-  display: block;
-}
-
-body.light .settings-panel {
+body.light .service-card {
   background: #fff;
   border-color: #ddd;
 }
 
-.settings-row {
-  margin-bottom: 14px;
-}
-
-.settings-buttons {
+.service-head {
   display: flex;
-
-  gap: 6px;
-}
-
-.settings-button {
-  flex: 1;
-
-  padding:
-    8px 5px;
-
-  border-radius: 7px;
-
-  border:
-    1px solid #555;
-
-  background: transparent;
-
-  color: inherit;
-
-  cursor: pointer;
-
-  font-size:
-    calc(12px * var(--font-scale));
-}
-
-.settings-button.active {
-  background: #4285f4;
-
-  border-color: #4285f4;
-
-  color: #fff;
-}
-
-.font-size-display {
-  display: flex;
-
   align-items: center;
+  gap: 9px;
+  height: 70px;
+  margin-bottom: 10px;
+}
 
+.service-number {
+  width: calc((100% - 21px) / 2);
+  min-width: 0;
+  flex: 0 0 calc((100% - 21px) / 2);
+  height: 50px;
+
+  padding: 0 16px;
+
+  border-radius: 10px;
+  background: #3374A9;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
   justify-content: center;
 
-  cursor: default;
+  text-align: center;
+  font-size: calc(25px * var(--font-scale));
+  font-weight: 800;
 }
 
+.service-name {
+  height: 25px;
+  color: #fff;
+  line-height: 25px;
+  font-size: calc(25px * var(--font-scale));
+  font-weight: 800;
+}
+
+body.light .service-name {
+  color: #000;
+}
+
+.service-conductor {
+  width: 100%;
+  height: 18px;
+  margin: 0 0 15px;
+  padding: 0;
+  line-height: 18px;
+  text-align: center;
+  font-size: calc(18px * var(--font-scale));
+  color: #aaa;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+  height: 70px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  gap: 5px;
+}
+
+.service-detail {
+  height: 15px;
+  line-height: 15px;
+  margin: 0;
+
+  font-size: calc(15px * var(--font-scale));
+  color: #aaa;
+}
+
+body.light .service-detail {
+  color: #777;
+}
+
+.service-volunteers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-pair {
+  width: 100%;
+}
+
+.service-team-label {
+  text-align: left;
+  font-size: calc(12px * var(--font-scale));
+  font-weight: 600;
+  margin: 0 0 3px 2px;
+}
+
+.service-pair-people {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+}
+
+.service-person {
+  height: 40px;
+  min-height: 40px;
+
+  border-radius: 10px;
+  border: 1px solid #555;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 0 3px;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 600;
+  color: #aaa;
+}
+
+body.light .service-person {
+  color: #777;
+  border-color: #ccc;
+}
+
+.service-person.filled {
+  border: 3px solid #6FA8D8;
+  background: rgba(111,168,216,.16);
+  color: inherit;
+}
+
+body.light .service-person.filled {
+  background: #eef5fb;
+  border: 3px solid #3F6F9F;
+  color: inherit;
+}
+
+.service-empty {
+  padding: 30px 10px;
+
+  text-align: center;
+  color: #999;
+
+  font-size: calc(15px * var(--font-scale));
+}
 
 /* =========================================================
    관리자 비밀번호
@@ -1122,81 +838,48 @@ body.light .settings-panel {
 
 .admin-login-overlay {
   position: fixed;
-
   inset: 0;
-
   z-index: 2000;
-
   display: none;
-
   align-items: center;
   justify-content: center;
-
   padding: 20px;
-
-  background:
-    rgba(0,0,0,.72);
+  background: rgba(0,0,0,.72);
 }
 
 .admin-login-box {
   width: 100%;
   max-width: 360px;
-
-  padding:
-    28px 22px 24px;
-
+  padding: 28px 22px 24px;
   border-radius: 18px;
-
   background: #1b1b1b;
-
   color: #f5f5f5;
-
-  box-shadow:
-    0 12px 40px rgba(0,0,0,.35);
-
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
   text-align: center;
 }
 
 .admin-login-icon {
   font-size: 42px;
-
   line-height: 1;
-
   margin-bottom: 12px;
 }
 
 .admin-login-title {
-  margin:
-    0 0 18px;
-
-  font-size:
-    calc(23px * var(--font-scale));
-
+  margin: 0 0 18px;
+  font-size: calc(23px * var(--font-scale));
   font-weight: 800;
 }
 
 .admin-login-input {
   width: 100%;
-
   height: 48px;
-
-  padding:
-    0 14px;
-
-  border:
-    1px solid #555;
-
+  padding: 0 14px;
+  border: 1px solid #555;
   border-radius: 10px;
-
   background: #101010;
-
   color: #fff;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   text-align: center;
-
   outline: none;
 }
 
@@ -1206,70 +889,42 @@ body.light .settings-panel {
 
 .admin-save-password {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
-  margin:
-    15px 0 18px;
-
-  font-size:
-    calc(15px * var(--font-scale));
-
+  margin: 15px 0 18px;
+  font-size: calc(15px * var(--font-scale));
   cursor: pointer;
 }
 
 .admin-save-password input {
   width: 18px;
   height: 18px;
-
   margin: 0;
 }
 
 .admin-login-confirm {
   width: 100%;
-
   height: 48px;
-
   border: 0;
-
   border-radius: 10px;
-
   background: #234563;
-
   color: #fff;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 700;
-
   cursor: pointer;
 }
 
 .admin-login-cancel {
   width: 100%;
-
   height: 44px;
-
   margin-top: 10px;
-
-  border:
-    1px solid #555;
-
+  border: 1px solid #555;
   border-radius: 10px;
-
   background: transparent;
-
   color: inherit;
-
-  font-size:
-    calc(18px * var(--font-scale));
-
+  font-size: calc(18px * var(--font-scale));
   font-weight: 700;
-
   cursor: pointer;
 }
 
@@ -1288,6 +943,138 @@ body.light .admin-login-input {
   border-color: #ccc;
 }
 
+/* =========================================================
+   하단 메뉴
+========================================================= */
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 60px;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  background: #18324a;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+body.light .bottom-nav {
+  background: #18324a;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.nav-button {
+  border: 0;
+  background: transparent;
+  color: #fff;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.nav-button:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,.25);
+}
+
+.nav-button.active {
+  color: #fff;
+}
+
+body.light .nav-button.active {
+  color: #fff;
+}
+
+/* =========================================================
+   설정
+========================================================= */
+
+.settings-panel {
+  position: fixed;
+  top: 64px;
+  right: 10px;
+
+  width: 230px;
+  padding: 15px;
+
+  z-index: 1100;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+
+  background: rgba(30,30,30,.98);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+
+  display: none;
+}
+
+.settings-panel.show {
+  display: block;
+}
+
+body.light .settings-panel {
+  background: #fff;
+  border-color: #ddd;
+}
+
+.settings-title {
+  margin-bottom: 12px;
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 800;
+}
+
+.settings-row {
+  margin-bottom: 14px;
+}
+
+.settings-label {
+  margin-bottom: 7px;
+  font-size: calc(13px * var(--font-scale));
+  color: #aaa;
+}
+
+body.light .settings-label {
+  color: #777;
+}
+
+.settings-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.settings-button {
+  flex: 1;
+
+  padding: 8px 5px;
+
+  border-radius: 7px;
+  border: 1px solid #555;
+
+  background: transparent;
+  color: inherit;
+
+  cursor: pointer;
+  font-size: calc(12px * var(--font-scale));
+}
+
+.settings-button.active {
+  background: #4285f4;
+  border-color: #4285f4;
+  color: #fff;
+}
+
+.font-size-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
 
 /* =========================================================
    반응형
@@ -1295,20 +1082,14 @@ body.light .admin-login-input {
 
 @media (max-width: 600px) {
 
-  .top-title {
-    font-size: 31px;
-  }
-
   .name-grid {
     gap: 6px;
   }
 
   .name-card {
-    height: 50px;
-    min-height: 50px;
-
-    font-size:
-      calc(16px * var(--font-scale));
+    height: 40px;
+    min-height: 40px;
+    font-size: calc(18px * var(--font-scale));
   }
 
   .check-mark {
@@ -1317,2984 +1098,1560 @@ body.light .admin-login-input {
     flex-basis: 17px;
   }
 
-  .admin-names {
-    gap: 6px;
-  }
-
-  .admin-name {
-    min-height: 44px;
-
-    font-size:
-      calc(16px * var(--font-scale));
-  }
-
   .group-slots {
-    grid-template-columns:
-      repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .group-slot {
-    min-height: 44px;
-
-    font-size:
-      calc(16px * var(--font-scale));
+  .service-volunteers {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .appoint-members {
-    grid-template-columns:
-      repeat(3, 1fr);
-  }
-
-  .appoint-person {
-    min-height: 42px;
-
-    font-size:
-      calc(16px * var(--font-scale));
-  }
-
-  .current-names {
-    grid-template-columns:
-      repeat(4, 1fr);
-  }
-
-  .current-name {
-    font-size:
-      calc(14px * var(--font-scale));
-  }
-
 }
-
 
 @media (max-width: 360px) {
 
   .name-card {
-    font-size:
-      calc(15px * var(--font-scale));
+    height: 40px;
+    min-height: 40px;
+    font-size: calc(18px * var(--font-scale));
   }
 
   .check-mark {
     width: 15px;
     height: 15px;
-
     flex-basis: 15px;
+    font-size: calc(9px * var(--font-scale));
+  }
+}
 
-    font-size:
-      calc(9px * var(--font-scale));
+.service-title-with-refresh {
+  position: relative;
+  height: 25px;
+  line-height: 25px;
+  margin: 0 0 20px;
+}
+
+.service-refresh-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border: 1px solid #315d83;
+  border-radius: 12px;
+  background: #234563;
+  color: #fff;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+
+body.light .service-refresh-button {
+  background: #fff;
+  color: #234563;
+  border-color: #b8c9d8;
+  box-shadow: 0 2px 6px rgba(0,0,0,.14);
+}
+
+.service-refresh-button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+/* =========================================================
+   봉사용 새로고침 진행 표시
+========================================================= */
+
+.service-refresh-button.refreshing {
+  animation: serviceRefreshSpin 0.8s linear infinite;
+  pointer-events: none;
+}
+
+
+@keyframes serviceRefreshSpin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 
 }
 
-</style>
-</head>
 
-
-<body>
-
-
-<!-- =========================================================
-     상단
-========================================================= -->
-
-<header class="top-bar">
-
-  <button
-    class="top-button top-left"
-    onclick="goBack()"
-    aria-label="뒤로가기"
-  >
-    ‹
-  </button>
-
-
-  <div
-    class="top-title"
-    id="topTitle"
-  >
-    전시대
-  </div>
-
-
-  <button
-    class="top-button top-right"
-    onclick="toggleSettings()"
-    aria-label="설정"
-  >
-    ⚙
-  </button>
-
-</header>
-
-
-
-<!-- =========================================================
-     설정
-========================================================= -->
-
-<div
-  class="settings-panel"
-  id="settingsPanel"
->
-
-  <div class="settings-row">
-
-    <div class="settings-buttons">
-
-      <button
-        class="settings-button"
-        id="lightButton"
-        onclick="setTheme('light')"
-      >
-        ☀
-      </button>
-
-      <button
-        class="settings-button"
-        id="darkButton"
-        onclick="setTheme('dark')"
-      >
-        🌙
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="settings-row">
-
-    <div class="settings-buttons">
-
-      <button
-        class="settings-button"
-        onclick="changeFontSize(-10)"
-      >
-        −
-      </button>
-
-      <div
-        class="settings-button font-size-display"
-        id="fontSizeDisplay"
-      >
-        100%
-      </div>
-
-      <button
-        class="settings-button"
-        onclick="changeFontSize(10)"
-      >
-        +
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-<!-- =========================================================
-     본문
-========================================================= -->
-
-<main class="main">
-
-
-  <!-- =======================================================
-       1. 알림
-  ======================================================== -->
-
-  <section
-    id="noticeView"
-    class="view active"
-  >
-
-    <h1 class="page-title">
-      알림
-    </h1>
-
-
-    <div class="notice-section">
-
-      <div class="notice-card">
-
-        <div class="notice-line">
-          지금은 신청 시간이 아닙니다
-        </div>
-
-        <div class="notice-line">
-          (추가 신청 및 임명 취소는 인도자에게)
-        </div>
-
-        <div class="notice-line">
-          토요일 신청 : 수요일
-        </div>
-
-        <div class="notice-line">
-          토요일 마감 : 금요일
-        </div>
-
-        <div class="notice-line">
-          일요일 신청 : 금요일
-        </div>
-
-        <div class="notice-line">
-          일요일 마감 : 토요일
-        </div>
-
-        <div class="notice-line">
-          토요일 (오전) : 김경수 형제
-        </div>
-
-        <div class="notice-line">
-          일요일 (오전) : 정지원 형제
-        </div>
-
-        <div class="notice-line">
-          서울 북부 회중
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =======================================================
-       2. 신청
-  ======================================================== -->
-
-  <section
-    id="applyView"
-    class="view"
-  >
-
-    <h1 class="page-title">
-      신청
-    </h1>
-
-
-    <!-- 토요일 -->
-
-    <div class="apply-date-box">
-
-      <div
-        class="apply-date"
-        id="saturdayDate"
-      ></div>
-
-      <div class="apply-time">
-        오후 1:00~3:00 (2시간)
-      </div>
-
-    </div>
-
-
-    <div
-      class="count-box"
-      id="applySelectedCount"
-    >
-      현재 선택 0 명
-    </div>
-
-
-    <div class="apply-name-open-wrap">
-
-      <button
-        type="button"
-        class="apply-name-open-button"
-        onclick="toggleApplyNames()"
-      >
-        전시대 신청
-      </button>
-
-    </div>
-
-
-    <div
-      class="name-grid"
-      id="applyNameGrid"
-      style="display:none;"
-    ></div>
-
-
-    <div
-      class="apply-complete-wrap"
-      id="applyCompleteWrap"
-      style="display:none;"
-    >
-
-      <button
-        class="apply-complete-button"
-        onclick="completeApply()"
-      >
-        신청 완료
-      </button>
-
-    </div>
-
-
-    <!-- 현재 신청자 -->
-
-    <div class="current-applicants">
-
-      <div
-        class="current-title"
-        id="currentApplicantTitle"
-      >
-        신청자 0명
-      </div>
-
-      <div
-        class="current-names"
-        id="currentApplicantNames"
-      >
-
-        <div class="current-empty">
-          아직 신청한 사람이 없습니다.
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =======================================================
-       3. 임명
-  ======================================================== -->
-
-  <section
-    id="appointView"
-    class="view"
-  >
-
-    <h1 class="page-title">
-      임명
-    </h1>
-
-
-    <div class="appoint-section">
-
-      <div
-        class="appoint-list"
-        id="appointList"
-      >
-
-        <div class="appoint-empty">
-          임명된 그룹을 불러오는 중입니다.
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =======================================================
-       4. 관리용
-  ======================================================== -->
-
-  <section
-    id="adminView"
-    class="view"
-  >
-
-    <h1 class="page-title">
-      관리자용
-    </h1>
-
-
-    <div class="admin-section">
-
-
-      <div
-        class="admin-count"
-        id="adminCount"
-      >
-        미배정 신청자 0명
-      </div>
-
-
-      <!-- 미배정 신청자 -->
-
-      <div
-        class="admin-names"
-        id="adminNames"
-      >
-
-        <div class="name-loading">
-          신청자를 불러오는 중입니다.
-        </div>
-
-      </div>
-
-
-      <!-- 직접 추가 -->
-
-      <div
-        style="
-          display:flex;
-          justify-content:flex-end;
-          margin-bottom:15px;
-        "
-      >
-
-        <button
-          class="admin-add-button"
-          onclick="addManualApplicant()"
-        >
-          + 추가
-        </button>
-
-      </div>
-
-
-      <!-- 그룹 추가 -->
-
-      <div class="group-controls">
-
-        <button
-          class="add-group-button"
-          onclick="addGroup()"
-        >
-          + 봉사 그룹 추가
-        </button>
-
-      </div>
-
-
-      <!-- 그룹 -->
-
-      <div
-        class="groups"
-        id="groups"
-      ></div>
-
-
-    </div>
-
-  </section>
-
-
-</main>
-
-
-
-<!-- =========================================================
-     하단 메뉴
-========================================================= -->
-
-<nav class="bottom-nav">
-
-  <button
-    class="nav-button active"
-    id="navNotice"
-    onclick="showView('notice')"
-  >
-    알림
-  </button>
-
-
-  <button
-    class="nav-button"
-    id="navApply"
-    onclick="showView('apply')"
-  >
-    신청
-  </button>
-
-
-  <button
-    class="nav-button"
-    id="navAppoint"
-    onclick="showView('appoint')"
-  >
-    임명
-  </button>
-
-
-  <button
-    class="nav-button"
-    id="navAdmin"
-    onclick="showView('admin')"
-  >
-    관리용
-  </button>
-
-</nav>
-
-
-
-<!-- =========================================================
-     관리자 비밀번호
-========================================================= -->
-
-<div
-  id="adminLoginOverlay"
-  class="admin-login-overlay"
->
-
-  <div class="admin-login-box">
-
-    <div class="admin-login-icon">
-      🔒
-    </div>
-
-    <h2 class="admin-login-title">
-      관리자용
-    </h2>
-
-
-    <input
-      type="password"
-      id="adminPasswordInput"
-      class="admin-login-input"
-      inputmode="numeric"
-      autocomplete="current-password"
-      placeholder="비밀번호 입력"
-      onkeydown="
-        if(event.key === 'Enter')
-          checkAdminPassword()
-      "
-    >
-
-
-    <label class="admin-save-password">
-
-      <input
-        type="checkbox"
-        id="saveAdminPassword"
-      >
-
-      이 기기에 비밀번호 저장
-
-    </label>
-
-
-    <button
-      type="button"
-      class="admin-login-confirm"
-      onclick="checkAdminPassword()"
-    >
-      확인
-    </button>
-
-
-    <button
-      type="button"
-      class="admin-login-cancel"
-      onclick="cancelAdminLogin()"
-    >
-      취소
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<script>
+.service-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.service-loading-spinner {
+  display: inline-block;
+  font-size: 24px;
+  animation: serviceRefreshSpin 0.8s linear infinite;
+}
 
 /* =========================================================
-   Apps Script
+   봉사 신청 버튼
+   기존 명단 선택 화면의 CSS는 변경하지 않습니다.
 ========================================================= */
 
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyGNTjZf3wagn7kWW0u1ZhBVnwBqQv-5MaYVM3U4lN1OjQ4JVMgckPnTIODGlL8e7yO/exec";
-   
+.volunteer-apply-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  height: 48px;
+  margin: 0 auto 18px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #3374A9;
+  color: #fff;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 700;
+
+  cursor: pointer;
+}
 
 /* =========================================================
-   저장 키
+   봉사자 선택 화면 뒤로가기
 ========================================================= */
 
-const MY_SELECTION_KEY =
-  "jeonsidaeMySelections";
+.volunteer-back-button {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: 48px;
+  margin: 0 auto 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #3374A9;
+  color: #fff;
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 700;
+  cursor: pointer;
+}
 
-const GROUP_KEY =
-  "jeonsidaeGroups";
-
-const ADMIN_PASSWORD_KEY =
-  "jeonsidaeAdminPassword";
-
+.volunteer-back-button:active {
+  transform: scale(0.99);
+}
 
 /* =========================================================
-   관리자 비밀번호
-   ---------------------------------------------------------
-   기존 토요일과 동일한 방식
+   봉사자 선택 - 뒤로가기 / 제출 좌우 분할
 ========================================================= */
 
-const ADMIN_PASSWORD =
-  "3061";
+.volunteer-action-buttons {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 18px;
+  gap: 0;
+}
 
+.volunteer-action-buttons .volunteer-back-button,
+.volunteer-action-buttons .volunteer-submit-button {
+  flex: 1;
+  width: 50%;
+  max-width: none;
+  height: 48px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.volunteer-action-buttons .volunteer-back-button {
+  border-radius: 12px 0 0 12px;
+}
+
+.volunteer-action-buttons .volunteer-submit-button {
+  border-radius: 0 12px 12px 0;
+  border-left: 1px solid #fff;
+}
+
+.volunteer-apply-area {
+  display: none;
+}
+
+.volunteer-apply-area.show {
+  display: block;
+}
+
+.apply-back-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.volunteer-apply-button.open .apply-back-icon {
+  display: inline-flex;
+}
+
+.volunteer-submit-button {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: 48px;
+  margin: 18px auto 0;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #455A64;
+  color: #fff;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.volunteer-submit-button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.submitted-volunteer-area {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto 0;
+}
+
+.submitted-volunteer-title {
+  margin-bottom: 10px;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 800;
+}
+
+.submitted-volunteer-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.submitted-volunteer-name {
+  min-height: 40px;
+  padding: 8px 13px;
+
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.15);
+
+  background: rgba(255,255,255,.08);
+  color: inherit;
+
+  display: flex;
+  align-items: center;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 600;
+}
+
+body.light .submitted-volunteer-name {
+  background: #fff;
+  border-color: #ddd;
+}
+
+.notice-container {
+  padding: 18px 14px 30px;
+}
+
+.notice-card {
+  margin-bottom: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+}
+
+/* 어두운 화면 */
+body:not(.light) .notice-card {
+  background: rgba(255,255,255,.07);
+  color: #fff;
+}
+
+/* 밝은 화면 */
+body.light .notice-card {
+  background: #fff;
+  color: #000;
+}
+
+.notice-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: calc(17px * var(--font-scale));
+  color: #fff;
+}
+
+.notice-row + .notice-row {
+  border-top: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+body:not(.light) .notice-row + .notice-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.notice-row strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.notice-row span {
+  font-weight: 600;
+  text-align: right;
+  color: inherit;
+}
+
+body.light .notice-row {
+  color: #000;
+}
 
 /* =========================================================
-   현재 상태
+   관리자용 일정 선택
 ========================================================= */
 
-let masterNames = [];
+.admin-schedule-selector {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 18px;
+}
 
-let applicants = [];
+.admin-schedule-title {
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+}
 
-let groups = [];
+.admin-schedule-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-let selectedApplicant = null;
+.admin-schedule-button {
+  width: 100%;
+  min-height: 55px;
+  padding: 0 20px;
 
-let currentSelections = [];
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-let currentView =
-  "notice";
+  border: 0;
+  border-radius: 12px;
 
-let adminAuthenticated =
-  false;
+  background: #234563;
+  color: #fff;
+
+  font-size: calc(24px * var(--font-scale));
+  font-weight: 700;
+  text-align: left;
+
+  cursor: pointer;
+}
 
 
-/* =========================================================
-   시작
-========================================================= */
+.admin-add-schedule-button {
+  width: 100%;
+  min-height: 55px;
+  padding: 0 20px;
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    loadSettings();
+  border: 0;
+  border-radius: 12px;
 
-    setDates();
+  background: #172F43;
+  color: #fff;
 
-    loadApplicants();
+  font-size: calc(24px * var(--font-scale));
+  font-weight: 700;
+  text-align: left;
 
-    loadGroups();
+  cursor: pointer;
+}
 
+.admin-schedule-button.selected {
+  background: #3377aa;
+}
+
+.admin-schedule-arrow {
+  flex-shrink: 0;
+  margin-left: 12px;
+
+  font-size: 24px;
+  line-height: 1;
+}
+
+
+/* 관리자 일정 선택으로 돌아가기 */
+
+.admin-back-area {
+  display: flex;
+  justify-content: center;
+
+  margin: 12px 0 14px;
+}
+
+.admin-back-button {
+  width: 160px;
+  height: 42px;
+
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+
+  background: #455A64;
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.admin-back-button:active {
+  transform: scale(0.98);
+}
+
+
+.admin-management-area {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .admin-schedule-buttons {
+    flex-direction: column;
   }
-);
+}
+
+/* =========================================================
+   관리자 - 봉사 그룹 추가
+   기존 다른 화면의 CSS는 변경하지 않습니다.
+========================================================= */
+
+.new-group-form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.07);
+}
 
 
 /* =========================================================
    날짜
 ========================================================= */
 
-function setDates() {
+.new-group-date-row {
+  width: 100%;
+  margin-bottom: 16px;
+}
 
-  const today =
-    new Date();
+.new-group-date-row label {
+  display: block;
+  margin-bottom: 6px;
 
-  const day =
-    today.getDay();
+  font-size: calc(14px * var(--font-scale));
+  font-weight: 700;
+}
 
-  let daysUntilSaturday;
+.new-group-date-row input {
+  width: 100%;
+  height: 44px;
 
+  padding: 0 12px;
+  box-sizing: border-box;
 
-  if (day === 0) {
+  border: 1px solid #777;
+  border-radius: 9px;
 
-    daysUntilSaturday = 6;
+  background: #fff;
+  color: #222;
 
-  } else {
+  font-family: inherit;
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 600;
 
-    daysUntilSaturday =
-      6 - day;
-
-  }
-
-
-  const saturday =
-    new Date(today);
-
-  saturday.setDate(
-    today.getDate() +
-    daysUntilSaturday
-  );
-
-
-  document
-    .getElementById(
-      "saturdayDate"
-    )
-    .textContent =
-      "토요일 : " +
-      (saturday.getMonth() + 1) +
-      "월 " +
-      saturday.getDate() +
-      "일";
-
+  outline: none;
 }
 
 
 /* =========================================================
-   화면 전환
+   봉사시작 / 봉사마감
+   인원 / 봉사장소
 ========================================================= */
 
-function showView(view) {
+.new-group-select-row {
+  display: grid;
 
-  if (
-    view === "admin" &&
-    !adminAuthenticated
-  ) {
+  grid-template-columns: 1fr 1fr;
 
-    const savedPassword =
-      localStorage.getItem(
-        ADMIN_PASSWORD_KEY
-      );
+  gap: 14px;
 
-
-    if (
-      savedPassword ===
-      ADMIN_PASSWORD
-    ) {
-
-      adminAuthenticated =
-        true;
-
-    } else {
-
-      showAdminLogin();
-
-      return;
-
-    }
-
-  }
+  width: 100%;
+  margin-bottom: 16px;
+}
 
 
-  currentView =
-    view;
+.new-group-select-box {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 
-  document
-    .querySelectorAll(".view")
-    .forEach(
-      function(element) {
+.new-group-select-box label,
+.new-group-select-box > span {
+  display: block;
 
-        element.classList.remove(
-          "active"
-        );
-
-      }
-    );
+  font-size: calc(14px * var(--font-scale));
+  font-weight: 700;
+  color: inherit;
+}
 
 
-  document
-    .querySelectorAll(".nav-button")
-    .forEach(
-      function(button) {
+/* 모든 선택창 동일한 높이 */
 
-        button.classList.remove(
-          "active"
-        );
+.new-group-select-box select,
+.new-group-select-box input {
+  width: 100%;
+  height: 40px;
 
-      }
-    );
+  padding: 0 10px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #777;
+  border-radius: 9px;
+
+  background: #222;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 600;
+
+  outline: none;
+}
+
+/* 드롭다운 박스 */
+.new-group-select-box select {
+  cursor: pointer;
+
+  border: 5px solid #455A64;
+  background: #F1F4F5;
+  color: #222;
+}
+
+.new-group-select-box select:focus {
+  border-color: #455A64;
+  box-shadow: 0 0 0 2px rgba(69,90,100,.18);
+}
+
+.new-group-select-box input:focus {
+  border-color: #6FA8D8;
+  box-shadow: 0 0 0 2px rgba(111,168,216,.18);
+}
+
+/* =========================================================
+   그룹 추가 / 취소
+========================================================= */
+
+.new-group-form .new-group-create-button,
+.new-group-form .new-group-cancel-button {
+  width: 50%;
+  min-width: 0;
+  height: 48px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 10px;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+/* 그룹 추가 */
+
+.new-group-form .new-group-create-button {
+  background: #3374A9;
+  color: #fff;
+}
+
+/* 취소 */
+
+.new-group-form .new-group-cancel-button {
+  background: #B83232;
+  color: #fff;
+}
 
 
-  const viewElement =
-    document.getElementById(
-      view + "View"
-    );
+/* 버튼 정렬 */
 
+.new-group-form > div:last-child {
+  display: flex;
 
-  if (viewElement) {
+  width: 100%;
 
-    viewElement.classList.add(
-      "active"
-    );
+  justify-content: stretch;
+  align-items: center;
 
-  }
+  gap: 8px;
 
-
-  const navElement =
-    document.getElementById(
-      "nav" +
-      view.charAt(0).toUpperCase() +
-      view.slice(1)
-    );
-
-
-  if (navElement) {
-
-    navElement.classList.add(
-      "active"
-    );
-
-  }
-
-
-  document
-    .getElementById("topTitle")
-    .textContent =
-      "전시대";
-
-
-  if (view === "apply") {
-
-    loadApplicants();
-
-  }
-
-
-  if (view === "admin") {
-
-    loadApplicants();
-
-    loadGroups();
-
-  }
-
-
-  if (view === "appoint") {
-
-    loadGroups();
-
-  }
-
-
-  window.scrollTo(
-    0,
-    0
-  );
-
+  margin-top: 4px;
 }
 
 
 /* =========================================================
-   뒤로가기
+   밝은 화면
 ========================================================= */
 
-function goBack() {
+body.light .new-group-form {
+  background: #fff;
+  border-color: #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
 
-  if (
-    currentView !== "notice"
-  ) {
+body.light .new-group-select-box select,
+body.light .new-group-select-box input {
+  background: #fff;
+  color: #222;
+  border-color: #aaa;
+}
 
-    showView("notice");
+body.light .new-group-date-row input {
+  background: #fff;
+  color: #222;
+  border-color: #aaa;
+}
 
-    return;
+/* =========================================================
+   어두운 화면
+========================================================= */
 
-  }
+body:not(.light) .new-group-select-box select {
+  background: #222;
+  color: #fff;
+  border-color: #666;
+}
 
-
-  history.back();
-
+body:not(.light) .new-group-date-row input {
+  background: #222;
+  color: #fff;
+  border-color: #666;
 }
 
 
 /* =========================================================
-   관리자 로그인
+   휴대폰
 ========================================================= */
 
-function showAdminLogin() {
+@media (max-width: 600px) {
 
-  const overlay =
-    document.getElementById(
-      "adminLoginOverlay"
-    );
-
-  const input =
-    document.getElementById(
-      "adminPasswordInput"
-    );
-
-  const saveCheckbox =
-    document.getElementById(
-      "saveAdminPassword"
-    );
-
-
-  const savedPassword =
-    localStorage.getItem(
-      ADMIN_PASSWORD_KEY
-    );
-
-
-  if (saveCheckbox) {
-
-    saveCheckbox.checked =
-      savedPassword ===
-      ADMIN_PASSWORD;
-
+  .new-group-form {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 18px;
   }
 
 
-  if (input) {
+  /* 날짜는 전체 폭 */
 
-    input.value = "";
-
+  .new-group-date-row {
+    margin-bottom: 16px;
   }
 
 
-  if (overlay) {
+  /* 시작/마감, 인원/장소는 2칸 유지 */
 
-    overlay.style.display =
-      "flex";
-
+  .new-group-select-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
 
-  setTimeout(
-    function() {
+.new-group-select-box select,
+.new-group-select-box input {
+  height: 40px;
+  padding: 0 7px;
 
-      if (input) {
-
-        input.focus();
-
-      }
-
-    },
-    50
-  );
-
+  font-size: calc(18px * var(--font-scale));
 }
 
+  /* 그룹 추가 / 취소도 50 : 50 */
 
-function cancelAdminLogin() {
+  .new-group-form > div:last-child {
+    flex-direction: row;
+    align-items: stretch;
 
-  const overlay =
-    document.getElementById(
-      "adminLoginOverlay"
-    );
+    gap: 8px;
 
-  const input =
-    document.getElementById(
-      "adminPasswordInput"
-    );
-
-
-  if (input) {
-
-    input.value = "";
-
+    margin-top: 6px;
   }
 
 
-  if (overlay) {
-
-    overlay.style.display =
-      "none";
-
+  .new-group-form .new-group-create-button,
+  .new-group-form .new-group-cancel-button {
+    width: 50%;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 48px;
   }
-
 }
 
+/* =========================================================
+   그룹 카드 - 인원 / 봉사장소
+   아래 명단 버튼과 동일한 크기와 글자 스타일
+========================================================= */
 
-function checkAdminPassword() {
+.group-card .group-count-select,
+.group-card .group-location-select {
+  width: 100%;
+  height: 40px;
 
-  const input =
-    document.getElementById(
-      "adminPasswordInput"
-    );
+  padding: 0 10px;
 
-  const saveCheckbox =
-    document.getElementById(
-      "saveAdminPassword"
-    );
+  box-sizing: border-box;
 
+  border: 5px solid #455A64;
+  border-radius: 9px;
 
-  const password =
-    input
-      ? input.value.trim()
-      : "";
+  background: #F1F4F5;
+  color: #222;
 
+  font-family: inherit;
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 600;
 
-  if (
-    password !==
-    ADMIN_PASSWORD
-  ) {
+  outline: none;
+  cursor: pointer;
+}
 
-    alert(
-      "비밀번호가 올바르지 않습니다."
-    );
+.group-card .group-count-select:focus,
+.group-card .group-location-select:focus {
+  border-color: #455A64;
+  box-shadow: 0 0 0 2px rgba(69,90,100,.18);
+}
 
-    if (input) {
+body:not(.light) .group-card .group-count-select,
+body:not(.light) .group-card .group-location-select {
+  background: #222;
+  color: #fff;
+  border-color: #455A64;
+}
 
-      input.focus();
+body.light .group-card .group-count-select,
+body.light .group-card .group-location-select {
+  background: #F1F4F5;
+  color: #222;
+  border-color: #455A64;
+}
 
-      input.select();
+/* =========================================================
+   봉사용 - 전시대 일정 취소 안내
+========================================================= */
 
-    }
+.service-cancel-card {
+  width: 100%;
+  box-sizing: border-box;
 
-    return;
+  padding: 28px 22px 30px;
+  margin: 20px auto;
 
-  }
+  border-radius: 18px;
+  border: 2px solid #455A64;
 
+  background: #fff;
+  color: #222;
 
-  adminAuthenticated =
-    true;
+  text-align: center;
 
-
-  if (
-    saveCheckbox &&
-    saveCheckbox.checked
-  ) {
-
-    localStorage.setItem(
-      ADMIN_PASSWORD_KEY,
-      ADMIN_PASSWORD
-    );
-
-  } else {
-
-    localStorage.removeItem(
-      ADMIN_PASSWORD_KEY
-    );
-
-  }
-
-
-  const overlay =
-    document.getElementById(
-      "adminLoginOverlay"
-    );
-
-
-  if (overlay) {
-
-    overlay.style.display =
-      "none";
-
-  }
-
-
-  showView("admin");
-
+  box-shadow: 0 5px 18px rgba(0,0,0,.10);
 }
 
 
 /* =========================================================
-   명단 가져오기
+   📢 안내 아이콘
 ========================================================= */
 
-async function loadMasterNames() {
+.service-cancel-info-icon {
+  width: 40px;
+  height: 40px;
 
-  const grid =
-    document.getElementById(
-      "applyNameGrid"
-    );
+  margin: 0 auto 14px;
 
+  border-radius: 50%;
 
-  try {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    const response =
-      await fetch(
-        SCRIPT_URL +
-        "?action=jeonsidaeNames&t=" +
-        Date.now()
-      );
+  box-sizing: border-box;
 
+  background: #3374A9;
+  color: #fff;
 
-    const data =
-      await response.json();
+  font-size: 22px;
+  line-height: 1;
 
+  text-align: center;
+}
 
-    if (!data.success) {
+/* =========================================================
+   제목
+========================================================= */
 
-      throw new Error(
-        data.message ||
-        "전시대 신청 명단을 불러오지 못했습니다."
-      );
+.service-cancel-title {
+  margin: 0;
 
-    }
+  font-size: calc(26px * var(--font-scale));
+  font-weight: 900;
+  line-height: 1.4;
 
-
-    masterNames =
-      Array.isArray(data.names)
-        ? data.names
-        : [];
-
-
-    masterNames =
-      [...new Set(
-        masterNames
-          .map(function(name) {
-            return String(name).trim();
-          })
-          .filter(function(name) {
-            return name !== "";
-          })
-      )];
-
-
-    sortNames(masterNames);
-
-    renderApplyNames();
-
-
-  } catch (error) {
-
-    console.error(error);
-
-
-    grid.innerHTML =
-      '<div class="name-loading">' +
-      '전시대 신청 명단을 불러오지 못했습니다.<br>' +
-      '잠시 후 다시 시도해 주세요.' +
-      '</div>';
-
-  }
-
+  text-align: center;
 }
 
 
 /* =========================================================
-   전시대 신청 명단 열기
+   실선 구분
 ========================================================= */
 
-async function toggleApplyNames() {
+.service-cancel-divider {
+  width: 100%;
+  height: 1px;
 
-  const grid =
-    document.getElementById(
-      "applyNameGrid"
-    );
+  margin: 22px 0;
 
-  const completeWrap =
-    document.getElementById(
-      "applyCompleteWrap"
-    );
-
-
-  const isOpen =
-    grid.style.display !== "none";
-
-
-  if (isOpen) {
-
-    grid.style.display = "none";
-
-    completeWrap.style.display = "none";
-
-    return;
-
-  }
-
-
-  grid.style.display = "grid";
-
-  completeWrap.style.display = "block";
-
-  grid.innerHTML =
-    '<div class="name-loading">' +
-    '전시대 신청 명단을 불러오는 중입니다.' +
-    '</div>';
-
-
-  await loadMasterNames();
-
+  background: #777;
 }
 
 
 /* =========================================================
-   가나다순
+   중단 사유
 ========================================================= */
 
-function sortNames(array) {
+.service-cancel-reason {
+  margin: 0;
 
-  array.sort(
-    function(a, b) {
+  font-size: calc(25px * var(--font-scale));
+  font-weight: 900;
+  line-height: 1.5;
 
-      return a.localeCompare(
-        b,
-        "ko"
-      );
-
-    }
-  );
-
+  text-align: center;
 }
 
 
 /* =========================================================
-   신청 선택
+   어두운 화면
 ========================================================= */
 
-function getMySelections() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(
-        MY_SELECTION_KEY
-      );
-
-
-    if (!saved) {
-
-      return [];
-
-    }
-
-
-    const parsed =
-      JSON.parse(
-        saved
-      );
-
-
-    return Array.isArray(parsed)
-      ? parsed
-      : [];
-
-
-  } catch (error) {
-
-    return [];
-
-  }
-
+body:not(.light) .service-cancel-card {
+  background: #202b36;
+  color: #fff;
+  border-color: #6f8495;
 }
 
+body:not(.light) .service-cancel-divider {
+  background: #fff;
+}
 
-function saveMySelections(
-  list
-) {
+body:not(.light) .service-cancel-info-icon {
+  background: #3374A9;
+  color: #fff;
+}
 
-  localStorage.setItem(
-    MY_SELECTION_KEY,
-    JSON.stringify(list)
-  );
+/* =========================================================
+   봉사용 - 전시대 임명 카드
+   임명 1개 = 카드 1개
+========================================================= */
 
+.service-appointment-card {
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 20px;
+  margin-bottom: 16px;
+
+  border-radius: 16px;
+
+  /* 박스 두께 5px */
+  border: 5px solid #455A64;
+
+  background: #fff;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+body.light .service-appointment-card {
+
+  background: #fff;
+
+  border-color: #455A64;
+}
+
+body:not(.light) .service-appointment-card {
+
+  background: #080808;
+
+  border-color: #fff;
+
+  color: #fff;
+}
+
+.service-appointment-title {
+  width: 100%;
+  margin-bottom: 18px;
+
+  text-align: center;
+
+  font-size: calc(21px * var(--font-scale));
+  font-weight: 800;
+}
+
+.service-appointment-location {
+  width: 100%;
+  margin-bottom: 18px;
+
+  text-align: center;
+
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 800;
+}
+
+.service-appointment-time-area {
+  width: 100%;
+  margin-bottom: 18px;
+
+  text-align: center;
+}
+
+.service-appointment-time {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.service-time-gap {
+  display: none;
+}
+
+.service-appointment-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 14px 0;
+
+  background: #999;
+}
+
+body:not(.light) .service-appointment-divider {
+  background: #fff;
+}
+
+.service-appointment-rows {
+  width: 100%;
+}
+
+.service-appointment-row {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 34px;
+
+  box-sizing: border-box;
+}
+
+.service-appointment-names {
+  flex: 1;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 600;
+  text-align: left;
+}
+
+.service-appointment-slot {
+  width: 105px;
+  flex-shrink: 0;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 700;
+  text-align: right;
+}
+
+/* =========================================================
+   신청용 일정 마감 버튼
+========================================================= */
+
+.volunteer-schedule-btn.application-closed {
+  background: #777777 !important;
+  color: #ffffff !important;
+  opacity: 1;
+  cursor: pointer;
 }
 
 
 /* =========================================================
-   신청자 이름 출력
+   특정 날짜 추가 봉사 일정
 ========================================================= */
 
-function renderApplyNames() {
+/* 추가 일정 버튼 영역 */
 
-  const grid =
-    document.getElementById(
-      "applyNameGrid"
-    );
+.custom-volunteer-schedule-buttons,
+.custom-admin-schedule-buttons,
+.custom-service-schedule-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
 
+/* 특정 날짜 일정 버튼 */
 
-  currentSelections =
-    getMySelections();
+.custom-volunteer-schedule-button,
+.custom-admin-schedule-button,
+.custom-service-schedule-button {
+  position: relative;
 
+  width: 100%;
+  min-height: 55px;
 
-  const validNames =
-    new Set(
-      masterNames
-    );
+  padding: 0 20px;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  currentSelections =
-    currentSelections.filter(
-      function(name) {
+  box-sizing: border-box;
 
-        return validNames.has(
-          name
-        );
+  border: 0;
+  border-radius: 12px;
 
-      }
-    );
+  background: #234563;
+  color: #fff;
 
+  font-size: calc(20px * var(--font-scale));
+  font-weight: 700;
 
-  saveMySelections(
-    currentSelections
-  );
+  text-align: left;
 
-
-  grid.innerHTML =
-    "";
-
-
-  masterNames.forEach(
-    function(name) {
-
-      const card =
-        document.createElement(
-          "button"
-        );
-
-
-      card.type =
-        "button";
-
-
-      card.className =
-        "name-card";
-
-
-      const selected =
-        currentSelections.includes(
-          name
-        );
-
-
-      if (selected) {
-
-        card.classList.add(
-          "selected"
-        );
-
-      }
-
-
-      const check =
-        document.createElement(
-          "span"
-        );
-
-
-      check.className =
-        "check-mark";
-
-
-      check.textContent =
-        selected
-          ? "✓"
-          : "";
-
-
-      const text =
-        document.createElement(
-          "span"
-        );
-
-
-      text.textContent =
-        name;
-
-
-      card.appendChild(
-        check
-      );
-
-
-      card.appendChild(
-        text
-      );
-
-
-      card.onclick =
-        function() {
-
-          toggleSelection(
-            name
-          );
-
-        };
-
-
-      grid.appendChild(
-        card
-      );
-
-    }
-  );
-
-
-  updateApplyCount();
-
+  cursor: pointer;
 }
 
 
-function toggleSelection(
-  name
-) {
+/* 신청용 / 봉사용 일정 버튼 */
 
-  const index =
-    currentSelections.indexOf(
-      name
-    );
+.custom-volunteer-schedule-button::after,
+.custom-service-schedule-button::after {
+  content: "›";
 
+  flex-shrink: 0;
 
-  if (index >= 0) {
+  margin-left: 12px;
 
-    currentSelections.splice(
-      index,
-      1
-    );
-
-  } else {
-
-    currentSelections.push(
-      name
-    );
-
-  }
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+}
 
 
-  sortNames(
-    currentSelections
-  );
+/* 관리자 일정 버튼 */
+
+.custom-admin-schedule-button {
+  background: #234563;
+}
 
 
-  saveMySelections(
-    currentSelections
-  );
+/* 일정 버튼 눌렀을 때 */
+
+.custom-volunteer-schedule-button:active,
+.custom-admin-schedule-button:active,
+.custom-service-schedule-button:active {
+  transform: scale(0.99);
+}
 
 
-  renderApplyNames();
+/* 관리자 일정 삭제 버튼 */
 
+.custom-admin-schedule-item {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.custom-admin-schedule-item:last-child {
+  margin-bottom: 0;
+}
+
+.custom-admin-schedule-item .custom-admin-schedule-button {
+  flex: 1;
+  min-width: 0;
+
+  min-height: 55px;
+}
+
+.custom-admin-schedule-delete-button {
+  flex: 0 0 62px;
+
+  min-height: 55px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #B83232;
+  color: #fff;
+
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.custom-admin-schedule-delete-button:active {
+  transform: scale(0.98);
+}
+
+.custom-admin-schedule-delete-button:active {
+  transform: scale(0.98);
 }
 
 
 /* =========================================================
-   선택 인원
+   특정 날짜 일정 추가 팝업
 ========================================================= */
 
-function updateApplyCount() {
+.custom-volunteer-schedule-overlay {
+  position: fixed;
+  inset: 0;
 
-  document
-    .getElementById(
-      "applySelectedCount"
-    )
-    .textContent =
-      "현재 선택 " +
-      currentSelections.length +
-      " 명";
+  z-index: 3000;
 
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: rgba(0,0,0,.72);
+}
+
+
+.custom-volunteer-schedule-popup {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 24px 20px 20px;
+
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
+  background: #1b1b1b;
+  color: #fff;
+
+  box-shadow: 0 12px 40px rgba(0,0,0,.40);
+}
+
+
+.custom-volunteer-schedule-title {
+  margin: 0 0 20px;
+
+  text-align: center;
+
+  font-size: calc(22px * var(--font-scale));
+  font-weight: 800;
+}
+
+
+/* 입력 한 줄 */
+
+.custom-schedule-form-row {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin-bottom: 14px;
+
+  gap: 12px;
+}
+
+
+.custom-schedule-form-row label {
+  flex: 0 0 80px;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 700;
+}
+
+
+.custom-schedule-form-row input,
+.custom-schedule-form-row select {
+  flex: 1;
+  min-width: 0;
+
+  height: 44px;
+
+  padding: 0 10px;
+
+  box-sizing: border-box;
+
+  border: 5px solid #455A64;
+  border-radius: 9px;
+
+  background: #222;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 600;
+
+  outline: none;
+}
+
+
+.custom-schedule-form-row input:focus,
+.custom-schedule-form-row select:focus {
+  border-color: #6FA8D8;
+  box-shadow: 0 0 0 2px rgba(111,168,216,.18);
+}
+
+
+.custom-schedule-popup-buttons {
+  display: flex;
+
+  width: 100%;
+
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+
+.custom-schedule-popup-buttons button {
+  flex: 1;
+
+  height: 48px;
+
+  border: 0;
+  border-radius: 10px;
+
+  font-size: calc(16px * var(--font-scale));
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.custom-schedule-cancel-button {
+  background: #B83232;
+  color: #fff;
+}
+
+
+.custom-schedule-confirm-button {
+  background: #3374A9;
+  color: #fff;
 }
 
 
 /* =========================================================
-   신청 완료
+   특정 날짜 일정 추가 팝업 - 밝은 화면
 ========================================================= */
 
-async function completeApply() {
+body.light .custom-volunteer-schedule-popup {
+  background: #fff;
+  color: #222;
+}
 
-  const selected =
-    [...currentSelections];
 
-  if (selected.length === 0) {
-    alert(
-      "신청할 사람을 한 명 이상 선택해 주세요."
-    );
-    return;
-  }
-
-  sortNames(selected);
-
-  /* 신청 완료를 누르면 먼저 펼쳐진 명단을 닫습니다. */
-  currentSelections = [];
-  saveMySelections([]);
-
-  document
-    .getElementById("applyNameGrid")
-    .style.display = "none";
-
-  document
-    .getElementById("applyCompleteWrap")
-    .style.display = "none";
-
-  updateApplyCount();
-
-  try {
-
-    await postJson({
-      action: "saveJeonsidaeApplicants",
-      applicants: selected
-    });
-
-    await loadApplicants();
-
-    alert(
-      selected.length +
-      "명이 신청되었습니다."
-    );
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "신청 저장에 실패했습니다.\n" +
-      "잠시 후 다시 시도해 주세요."
-    );
-  }
-
+body.light .custom-schedule-form-row input,
+body.light .custom-schedule-form-row select {
+  background: #fff;
+  color: #222;
+  border-color: #aaa;
 }
 
 
 /* =========================================================
-   신청자 불러오기
+   특정 날짜 일정 추가 - 휴대폰
 ========================================================= */
 
-async function loadApplicants() {
+@media (max-width: 600px) {
 
-  try {
-
-    const response =
-      await fetch(
-        SCRIPT_URL +
-        "?action=jeonsidaeApplicants&t=" +
-        Date.now()
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !data.success
-    ) {
-
-      throw new Error(
-        data.message ||
-        "신청자를 불러오지 못했습니다."
-      );
-
-    }
-
-
-    applicants =
-      Array.isArray(
-        data.applicants
-      )
-        ? data.applicants
-        : [];
-
-
-    applicants =
-      [...new Set(
-        applicants
-          .map(
-            function(name) {
-
-              return String(name)
-                .trim();
-
-            }
-          )
-          .filter(
-            function(name) {
-
-              return name !== "";
-
-            }
-          )
-      )];
-
-
-    sortNames(
-      applicants
-    );
-
-
-    renderCurrentApplicants();
-
-    renderAdmin();
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-
-    /*
-      서버에서 아직 신청자를 가져오지 못할 경우
-      현재 기기에 저장된 선택을 사용
-    */
-
-    applicants =
-      getMySelections();
-
-
-    sortNames(
-      applicants
-    );
-
-
-    renderCurrentApplicants();
-
-    renderAdmin();
-
+  .custom-volunteer-schedule-popup {
+    max-width: 100%;
+    padding: 22px 16px 18px;
   }
 
+  .custom-schedule-form-row {
+    gap: 8px;
+  }
+
+  .custom-schedule-form-row label {
+    flex-basis: 70px;
+  }
+
+  .custom-schedule-form-row input,
+  .custom-schedule-form-row select {
+    height: 44px;
+    font-size: calc(16px * var(--font-scale));
+  }
+
+  .custom-admin-schedule-delete-button {
+    flex-basis: 58px;
+  }
+
+}
+
+/* =========================================================
+   신청자 확인 / 취소 버튼
+========================================================= */
+
+.applicant-manage-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.applicant-manage-buttons button {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 10px;
+
+  border: 0;
+  border-radius: 12px;
+
+  color: #fff;
+  font-family: inherit;
+  font-size: calc(17px * var(--font-scale));
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.applicant-manage-buttons .applicant-check-button {
+  background: #3374A9;
+}
+
+.applicant-manage-buttons .applicant-cancel-button {
+  background: #B83232;
+}
+
+.applicant-manage-buttons button:active {
+  transform: scale(0.98);
+}
+
+/* 신청자 목록 영역 */
+
+.schedule-applicants-area {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  margin: 20px auto;
+  padding: 16px;
+
+  border: 1px solid #ddd;
+  border-radius: 14px;
+
+  background: #fff;
+  color: #222;
+}
+
+.schedule-applicants-title {
+  margin-bottom: 14px;
+  text-align: center;
+  font-size: calc(20px * var(--font-scale));
+  font-weight: 800;
+}
+
+.schedule-applicants-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.schedule-applicants-message {
+  margin-top: 12px;
+  text-align: center;
+  font-size: calc(15px * var(--font-scale));
+}
+
+.schedule-applicants-action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.schedule-applicants-action-buttons button {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.schedule-applicant-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 8px 12px;
+
+  border: 1px solid #ddd;
+  border-radius: 9px;
+
+  font-size: calc(17px * var(--font-scale));
+  font-weight: 600;
+}
+
+.schedule-applicant-item input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .applicant-manage-buttons {
+    gap: 8px;
+  }
+
+  .applicant-manage-buttons button {
+    height: 46px;
+    font-size: calc(16px * var(--font-scale));
+  }
+}
+
+/* =========================================================
+   제출한 신청자 목록: 한 줄에 3명
+========================================================= */
+
+.schedule-applicants-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.schedule-applicants-list .schedule-applicant-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  font-size: calc(15px * var(--font-scale));
+  font-weight: 600;
+}
+
+.schedule-applicants-list .schedule-applicant-item input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 
 /* =========================================================
-   현재 신청자 표시 - 4열
+   신청자 목록 제목 숨기기 및 빨간색 삭제 버튼
 ========================================================= */
 
-function renderCurrentApplicants() {
-
-  const title =
-    document.getElementById(
-      "currentApplicantTitle"
-    );
-
-  const box =
-    document.getElementById(
-      "currentApplicantNames"
-    );
-
-
-  const names =
-    [...applicants];
-
-
-  sortNames(
-    names
-  );
-
-
-  title.textContent =
-    "신청자 " +
-    names.length +
-    "명";
-
-
-  box.innerHTML =
-    "";
-
-
-  if (
-    names.length === 0
-  ) {
-
-    box.innerHTML =
-      '<div class="current-empty">' +
-      '아직 신청한 사람이 없습니다.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  names.forEach(
-    function(name) {
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "current-name";
-
-
-      item.textContent =
-        name;
-
-
-      box.appendChild(
-        item
-      );
-
-    }
-  );
-
+/* 명단 위 제목 숨기기 */
+.schedule-applicants-title {
+  display: none;
 }
 
+/* 삭제 버튼 빨간색 */
+.applicant-delete-button {
+  background-color: #c62828;
+  color: #ffffff;
+  border: 1px solid #c62828;
+  border-radius: 8px;
+  font-size: calc(18px * var(--font-scale));
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.applicant-delete-button:hover {
+  background-color: #a61f1f;
+  border-color: #a61f1f;
+}
 
 /* =========================================================
-   관리자 화면
+   휴대폰 전용 - 선택한 신청자 표시
 ========================================================= */
 
-function renderAdmin() {
-
-  const assigned =
-    new Set();
-
-
-  groups.forEach(
-    function(group) {
-
-      group.forEach(
-        function(name) {
-
-          if (name) {
-
-            assigned.add(
-              name
-            );
-
-          }
-
-        }
-      );
-
-    }
-  );
-
-
-  const unassigned =
-    applicants.filter(
-      function(name) {
-
-        return !assigned.has(
-          name
-        );
-
-      }
-    );
-
-
-  sortNames(
-    unassigned
-  );
-
-
-  document
-    .getElementById(
-      "adminCount"
-    )
-    .textContent =
-      "미배정 신청자 " +
-      unassigned.length +
-      "명";
-
-
-  const box =
-    document.getElementById(
-      "adminNames"
-    );
-
-
-  box.innerHTML =
-    "";
-
-
-  if (
-    unassigned.length === 0
-  ) {
-
-    box.innerHTML =
-      '<div class="name-loading" ' +
-      'style="grid-column:1/-1">' +
-      '미배정 신청자가 없습니다.' +
-      '</div>';
-
-  } else {
-
-    unassigned.forEach(
-      function(name) {
-
-        const button =
-          document.createElement(
-            "button"
-          );
-
-
-        button.type =
-          "button";
-
-
-        button.className =
-          "admin-name";
-
-
-        if (
-          selectedApplicant ===
-          name
-        ) {
-
-          button.classList.add(
-            "selected"
-          );
-
-        }
-
-
-        button.textContent =
-          name;
-
-
-        button.onclick =
-          function() {
-
-            if (
-              selectedApplicant ===
-              name
-            ) {
-
-              selectedApplicant =
-                null;
-
-            } else {
-
-              selectedApplicant =
-                name;
-
-            }
-
-
-            renderAdmin();
-
-          };
-
-
-        box.appendChild(
-          button
-        );
-
-      }
-    );
-
-  }
-
-
-  renderGroups();
-
+ .schedule-applicants-list .schedule-applicant-item:has(input:checked) {
+  border: 1px solid #0000FF !important;
+  background: #303030 !important;
+  color: #fff !important;
 }
 
-
-/* =========================================================
-   관리자 직접 추가
-========================================================= */
-
-async function addManualApplicant() {
-
-  const name =
-    prompt(
-      "추가할 봉사자의 이름을 입력해 주세요."
-    );
-
-
-  if (
-    name === null
-  ) {
-
-    return;
-
-  }
-
-
-  const trimmed =
-    name.trim();
-
-
-  if (!trimmed) {
-
-    alert(
-      "이름을 입력해 주세요."
-    );
-
-    return;
-
-  }
-
-
-  if (
-    applicants.includes(
-      trimmed
-    )
-  ) {
-
-    alert(
-      "이미 신청자 목록에 있습니다."
-    );
-
-    return;
-
-  }
-
-
-  applicants.push(
-    trimmed
-  );
-
-
-  sortNames(
-    applicants
-  );
-
-
-  selectedApplicant =
-    trimmed;
-
-
-  renderAdmin();
-
-
-  try {
-
-    await postJson(
-      {
-        action:
-          "saveJeonsidaeApplicants",
-
-        applicants:
-          applicants
-      }
-    );
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-  }
-
+.schedule-applicants-list .schedule-applicant-item:has(input:checked) * {
+  color: #fff !important;
 }
 
-
-/* =========================================================
-   그룹 불러오기
-========================================================= */
-
-async function loadGroups() {
-
-  try {
-
-    const response =
-      await fetch(
-        SCRIPT_URL +
-        "?action=groups&t=" +
-        Date.now()
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !data.success
-    ) {
-
-      throw new Error(
-        data.message ||
-        "그룹을 불러오지 못했습니다."
-      );
-
-    }
-
-
-    const loaded =
-      Array.isArray(
-        data.groups
-      )
-        ? data.groups
-        : [];
-
-
-    groups =
-      loaded.map(
-        function(group) {
-
-          const result =
-            Array.isArray(group)
-              ? group.slice(0, 6)
-              : [];
-
-
-          while (
-            result.length < 6
-          ) {
-
-            result.push("");
-
-          }
-
-
-          return result;
-
-        }
-      );
-
-
-    renderGroups();
-
-    renderAdmin();
-
-    renderAppoint();
-
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-
-    /*
-      서버 그룹이 아직 없을 경우
-      브라우저 저장값 사용
-    */
-
-    try {
-
-      const saved =
-        localStorage.getItem(
-          GROUP_KEY
-        );
-
-
-      groups =
-        saved
-          ? JSON.parse(saved)
-          : [];
-
-    } catch (
-      storageError
-    ) {
-
-      groups = [];
-
-    }
-
-
-    renderGroups();
-
-    renderAppoint();
-
-  }
-
+/* 취소 명단 글자 크기 및 굵기 */
+.schedule-applicants-list .schedule-applicant-item {
+  font-size: 18px !important;
+  font-weight: 800 !important;
 }
-
-
-/* =========================================================
-   그룹 저장
-========================================================= */
-
-async function saveGroups() {
-
-  localStorage.setItem(
-    GROUP_KEY,
-    JSON.stringify(
-      groups
-    )
-  );
-
-
-  try {
-
-    await postJson(
-      {
-        action:
-          "saveGroups",
-
-        groups:
-          groups
-      }
-    );
-
-    return true;
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/* =========================================================
-   그룹 추가
-   ---------------------------------------------------------
-   새 그룹은 항상 맨 위
-========================================================= */
-
-async function addGroup() {
-
-  groups.unshift(
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  );
-
-
-  await saveGroups();
-
-
-  selectedApplicant =
-    null;
-
-
-  renderAdmin();
-
-  renderAppoint();
-
-}
-
-
-/* =========================================================
-   그룹 삭제
-========================================================= */
-
-async function deleteGroup(
-  index
-) {
-
-  if (
-    !confirm(
-      (index + 1) +
-      "번 그룹을 삭제하시겠습니까?"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  groups.splice(
-    index,
-    1
-  );
-
-
-  selectedApplicant =
-    null;
-
-
-  await saveGroups();
-
-
-  renderAdmin();
-
-  renderAppoint();
-
-}
-
-
-/* =========================================================
-   그룹 초기화
-========================================================= */
-
-async function resetGroup(
-  index
-) {
-
-  if (
-    !confirm(
-      (index + 1) +
-      "번 그룹의 봉사자를 초기화하시겠습니까?"
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  groups[index] =
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ];
-
-
-  selectedApplicant =
-    null;
-
-
-  await saveGroups();
-
-
-  renderAdmin();
-
-  renderAppoint();
-
-}
-
-
-/* =========================================================
-   그룹 표시
-========================================================= */
-
-function renderGroups() {
-
-  const box =
-    document.getElementById(
-      "groups"
-    );
-
-
-  box.innerHTML =
-    "";
-
-
-  if (
-    groups.length === 0
-  ) {
-
-    box.innerHTML =
-      '<div class="name-loading">' +
-      '아직 만든 봉사 그룹이 없습니다.<br>' +
-      '「+ 봉사 그룹 추가」를 눌러 그룹을 만들어 주세요.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  groups.forEach(
-    function(group, groupIndex) {
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "group-card";
-
-
-      const header =
-        document.createElement(
-          "div"
-        );
-
-
-      header.className =
-        "group-header";
-
-
-      const title =
-        document.createElement(
-          "div"
-        );
-
-
-      title.className =
-        "group-title";
-
-
-      title.textContent =
-        (groupIndex + 1) +
-        "번 그룹";
-
-
-      const buttons =
-        document.createElement(
-          "div"
-        );
-
-
-      buttons.className =
-        "group-buttons";
-
-
-      const resetButton =
-        document.createElement(
-          "button"
-        );
-
-
-      resetButton.type =
-        "button";
-
-
-      resetButton.className =
-        "group-action";
-
-
-      resetButton.textContent =
-        "초기화";
-
-
-      resetButton.onclick =
-        function() {
-
-          resetGroup(
-            groupIndex
-          );
-
-        };
-
-
-      const deleteButton =
-        document.createElement(
-          "button"
-        );
-
-
-      deleteButton.type =
-        "button";
-
-
-      deleteButton.className =
-        "group-action";
-
-
-      deleteButton.textContent =
-        "삭제";
-
-
-      deleteButton.onclick =
-        function() {
-
-          deleteGroup(
-            groupIndex
-          );
-
-        };
-
-
-      buttons.appendChild(
-        resetButton
-      );
-
-
-      buttons.appendChild(
-        deleteButton
-      );
-
-
-      header.appendChild(
-        title
-      );
-
-
-      header.appendChild(
-        buttons
-      );
-
-
-      const slots =
-        document.createElement(
-          "div"
-        );
-
-
-      slots.className =
-        "group-slots";
-
-
-      for (
-        let slotIndex = 0;
-        slotIndex < 6;
-        slotIndex++
-      ) {
-
-        const name =
-          group[slotIndex] ||
-          "";
-
-
-        const slot =
-          document.createElement(
-            "button"
-          );
-
-
-        slot.type =
-          "button";
-
-
-        slot.className =
-          "group-slot";
-
-
-        if (name) {
-
-          slot.classList.add(
-            "filled"
-          );
-
-          slot.textContent =
-            name;
-
-        } else {
-
-          slot.classList.add(
-            "empty"
-          );
-
-          slot.textContent =
-            "빈 자리";
-
-        }
-
-
-        slot.onclick =
-          function() {
-
-            handleSlotClick(
-              groupIndex,
-              slotIndex
-            );
-
-          };
-
-
-        slots.appendChild(
-          slot
-        );
-
-      }
-
-
-      card.appendChild(
-        header
-      );
-
-
-      card.appendChild(
-        slots
-      );
-
-
-      box.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   그룹 자리 배정
-========================================================= */
-
-async function handleSlotClick(
-  groupIndex,
-  slotIndex
-) {
-
-  const currentName =
-    groups[groupIndex][slotIndex];
-
-
-  /*
-    이미 들어있는 사람을 누르면
-    그 자리를 비웁니다.
-  */
-
-  if (currentName) {
-
-    groups[groupIndex][slotIndex] =
-      "";
-
-
-    selectedApplicant =
-      null;
-
-
-    await saveGroups();
-
-
-    renderAdmin();
-
-    renderAppoint();
-
-    return;
-
-  }
-
-
-  /*
-    먼저 신청자를 선택해야 합니다.
-  */
-
-  if (
-    !selectedApplicant
-  ) {
-
-    alert(
-      "먼저 위에서 봉사자 이름을 선택해 주세요."
-    );
-
-    return;
-
-  }
-
-
-  /*
-    같은 사람을 다른 그룹에서 제거
-  */
-
-  groups =
-    groups.map(
-      function(group) {
-
-        return group.map(
-          function(name) {
-
-            return name ===
-              selectedApplicant
-              ? ""
-              : name;
-
-          }
-        );
-
-      }
-    );
-
-
-  /*
-    현재 선택한 자리에는
-    선택된 사람을 넣습니다.
-  */
-
-  groups[groupIndex][slotIndex] =
-    selectedApplicant;
-
-
-  selectedApplicant =
-    null;
-
-
-  await saveGroups();
-
-
-  renderAdmin();
-
-  renderAppoint();
-
-}
-
-
-/* =========================================================
-   임명 화면
-========================================================= */
-
-function renderAppoint() {
-
-  const list =
-    document.getElementById(
-      "appointList"
-    );
-
-
-  list.innerHTML =
-    "";
-
-
-  const visibleGroups =
-    groups.filter(
-      function(group) {
-
-        return group.some(
-          function(name) {
-
-            return Boolean(name);
-
-          }
-        );
-
-      }
-    );
-
-
-  if (
-    visibleGroups.length === 0
-  ) {
-
-    list.innerHTML =
-      '<div class="appoint-empty">' +
-      '아직 임명된 그룹이 없습니다.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  groups.forEach(
-    function(group, index) {
-
-      const hasPerson =
-        group.some(
-          function(name) {
-
-            return Boolean(name);
-
-          }
-        );
-
-
-      if (!hasPerson) {
-
-        return;
-
-      }
-
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "appoint-card";
-
-
-      const title =
-        document.createElement(
-          "div"
-        );
-
-
-      title.className =
-        "appoint-title";
-
-
-      title.textContent =
-        (index + 1) +
-        "번 그룹";
-
-
-      const members =
-        document.createElement(
-          "div"
-        );
-
-
-      members.className =
-        "appoint-members";
-
-
-      group.forEach(
-        function(name) {
-
-          const person =
-            document.createElement(
-              "div"
-            );
-
-
-          person.className =
-            "appoint-person";
-
-
-          if (name) {
-
-            person.classList.add(
-              "filled"
-            );
-
-            person.textContent =
-              name;
-
-          } else {
-
-            person.textContent =
-              "빈 자리";
-
-          }
-
-
-          members.appendChild(
-            person
-          );
-
-        }
-      );
-
-
-      card.appendChild(
-        title
-      );
-
-
-      card.appendChild(
-        members
-      );
-
-
-      list.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   POST 공통
-========================================================= */
-
-async function postJson(
-  data
-) {
-
-  const response =
-    await fetch(
-      SCRIPT_URL,
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body:
-          JSON.stringify(data)
-      }
-    );
-
-
-  const result =
-    await response.json();
-
-
-  if (
-    !result.success
-  ) {
-
-    throw new Error(
-      result.message ||
-      "저장에 실패했습니다."
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   설정
-========================================================= */
-
-function toggleSettings() {
-
-  document
-    .getElementById(
-      "settingsPanel"
-    )
-    .classList.toggle(
-      "show"
-    );
-
-}
-
-
-function setTheme(
-  theme
-) {
-
-  if (
-    theme === "light"
-  ) {
-
-    document.body.classList.add(
-      "light"
-    );
-
-
-    localStorage.setItem(
-      "jeonsidaeTheme",
-      "light"
-    );
-
-  } else {
-
-    document.body.classList.remove(
-      "light"
-    );
-
-
-    localStorage.setItem(
-      "jeonsidaeTheme",
-      "dark"
-    );
-
-  }
-
-
-  updateSettingButtons();
-
-}
-
-
-function setFontSize(
-  size
-) {
-
-  size =
-    Math.max(
-      80,
-      Math.min(
-        150,
-        size
-      )
-    );
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font-scale",
-      size / 100
-    );
-
-
-  localStorage.setItem(
-    "jeonsidaeFontSize",
-    String(size)
-  );
-
-
-  updateSettingButtons();
-
-}
-
-
-function changeFontSize(
-  amount
-) {
-
-  const current =
-    Number(
-      localStorage.getItem(
-        "jeonsidaeFontSize"
-      ) ||
-      "100"
-    );
-
-
-  setFontSize(
-    current + amount
-  );
-
-}
-
-
-function loadSettings() {
-
-  const theme =
-    localStorage.getItem(
-      "jeonsidaeTheme"
-    ) ||
-    "dark";
-
-
-  const fontSize =
-    localStorage.getItem(
-      "jeonsidaeFontSize"
-    ) ||
-    "100";
-
-
-  setTheme(
-    theme
-  );
-
-
-  setFontSize(
-    Number(fontSize)
-  );
-
-}
-
-
-function updateSettingButtons() {
-
-  const theme =
-    document.body.classList.contains(
-      "light"
-    )
-      ? "light"
-      : "dark";
-
-
-  document
-    .getElementById(
-      "darkButton"
-    )
-    .classList.toggle(
-      "active",
-      theme === "dark"
-    );
-
-
-  document
-    .getElementById(
-      "lightButton"
-    )
-    .classList.toggle(
-      "active",
-      theme === "light"
-    );
-
-
-  const display =
-    document.getElementById(
-      "fontSizeDisplay"
-    );
-
-
-  if (display) {
-
-    display.textContent =
-      (
-        Number(
-          localStorage.getItem(
-            "jeonsidaeFontSize"
-          ) ||
-          "100"
-        )
-      ) +
-      "%";
-
-  }
-
-}
-
-
-/* =========================================================
-   설정창 바깥 클릭
-========================================================= */
-
-document.addEventListener(
-  "click",
-  function(event) {
-
-    const panel =
-      document.getElementById(
-        "settingsPanel"
-      );
-
-
-    const button =
-      document.querySelector(
-        ".top-right"
-      );
-
-
-    if (
-      panel.classList.contains(
-        "show"
-      ) &&
-      !panel.contains(
-        event.target
-      ) &&
-      !button.contains(
-        event.target
-      )
-    ) {
-
-      panel.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-</script>
-
-</body>
-</html>
