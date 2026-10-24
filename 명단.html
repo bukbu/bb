@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>명단 관리</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      margin: 0;
+      padding: 20px;
+
+      font-family:
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
+
+      background: #f5f6f8;
+      color: #222;
+    }
+
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+
+    /* =========================================================
+       제목
+    ========================================================= */
+
+    h1 {
+      margin: 0 0 20px;
+
+      text-align: center;
+
+      font-size: 26px;
+    }
+
+
+    /* =========================================================
+       추가 버튼
+    ========================================================= */
+
+    .add-button {
+      width: 100%;
+      height: 48px;
+
+      margin-bottom: 16px;
+
+      border: 0;
+      border-radius: 12px;
+
+      background: #286b5b;
+      color: white;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .add-button:active {
+      transform: translateY(1px);
+    }
+
+
+    /* =========================================================
+       이름 추가 입력 영역
+    ========================================================= */
+
+    .add-area {
+      display: none;
+
+      gap: 8px;
+
+      margin-bottom: 16px;
+    }
+
+
+    .add-area.show {
+      display: flex;
+    }
+
+
+    .add-area input {
+      flex: 1;
+      min-width: 0;
+
+      height: 48px;
+
+      padding: 0 14px;
+
+      border: 1px solid #ccc;
+      border-radius: 10px;
+
+      background: white;
+
+      font-size: 16px;
+
+      outline: none;
+    }
+
+
+    .add-area input:focus {
+      border-color: #286b5b;
+    }
+
+
+    .save-add-button {
+      width: 80px;
+      height: 48px;
+
+      border: 0;
+      border-radius: 10px;
+
+      background: #286b5b;
+      color: white;
+
+      font-size: 15px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .cancel-add-button {
+      width: 70px;
+      height: 48px;
+
+      border: 0;
+      border-radius: 10px;
+
+      background: #ddd;
+      color: #444;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================================================
+       명단
+    ========================================================= */
+
+    .member-list {
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+    }
+
+
+   .member-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  min-height: 58px;
+
+  padding:
+    10px
+    10px
+    10px
+    14px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 1px 4px
+    rgba(0, 0, 0, 0.08);
+}
+
+.member-main {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  gap: 10px;
+}
+
+.member-extra {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  gap: 8px;
+
+  padding-top: 4px;
+}
+
+.member-field {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.member-field-label {
+  color: #555;
+}
+
+.member-select {
+  height: 34px;
+
+  padding:
+    0
+    28px
+    0
+    9px;
+
+  border:
+    1px solid #ccc;
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: #222;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  outline: none;
+}
+
+
+/* 실제 값이 선택된 경우만 */
+
+.member-select.has-value {
+  background: #444;
+  color: white;
+
+  border-color: #444;
+}
+
+
+.member-select:focus {
+  border-color: #286b5b;
+}
+
+
+    .member-name {
+      flex: 1;
+      min-width: 0;
+
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+
+    /* =========================================================
+       역할
+    ========================================================= */
+
+    .role {
+      display: flex;
+      align-items: center;
+
+      gap: 4px;
+
+      white-space: nowrap;
+
+      font-size: 13px;
+
+      cursor: pointer;
+    }
+
+
+    /*
+     * 실제 checkbox는 숨기고
+     * 원형 버튼으로 표시합니다.
+     */
+
+    .role input {
+      display: none;
+    }
+
+
+    .role-circle {
+      width: 19px;
+      height: 19px;
+
+      border:
+        2px solid #aaa;
+
+      border-radius: 50%;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+    }
+
+
+    /*
+     * 선택된 상태
+     */
+
+    .role input:checked
+      + .role-circle {
+
+      border-color: #286b5b;
+
+      background: #286b5b;
+    }
+
+
+    /*
+     * 선택된 원 안쪽
+     */
+
+    .role input:checked
+      + .role-circle::after {
+
+      content: "";
+
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: white;
+    }
+
+
+    /* =========================================================
+       삭제
+    ========================================================= */
+
+    .delete-button {
+      height: 36px;
+
+      padding:
+        0
+        10px;
+
+      border: 0;
+      border-radius: 8px;
+
+      background: #e5e5e5;
+      color: #555;
+
+      font-size: 13px;
+
+      cursor: pointer;
+    }
+
+
+    .delete-button:hover {
+      background: #d5d5d5;
+    }
+
+
+    /* =========================================================
+       빈 명단
+    ========================================================= */
+
+    .empty-message {
+      padding: 40px 10px;
+
+      text-align: center;
+
+      color: #888;
+
+      font-size: 15px;
+    }
+
+
+   
+/* =========================================================
+   휴대폰 전용 기본 설정
+========================================================= */
+
+body {
+  padding: 14px;
+}
+
+.member-row {
+  gap: 7px;
+  padding-left: 10px;
+}
+
+.member-name {
+  font-size: 15px;
+}
+
+.role {
+  font-size: 11px;
+}
+
+.role-circle {
+  width: 17px;
+  height: 17px;
+}
+
+.role input:checked
+  + .role-circle::after {
+  width: 8px;
+  height: 8px;
+}
+
+.delete-button {
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="container">
+
+  <header class="page-header">
+
+    <button
+      type="button"
+      class="back-button"
+      onclick="history.back()"
+      aria-label="뒤로가기">
+      ‹
+    </button>
+
+    <h1>명단 관리</h1>
+
+    <button
+      type="button"
+      class="settings-icon-button"
+      onclick="toggleSettings()"
+      aria-label="설정">
+      ⚙
+    </button>
+
+  </header>
+
+
+    <!-- =====================================================
+         + 추가
+    ====================================================== -->
+
+    <button
+      type="button"
+      class="add-button"
+      onclick="showAddArea()">
+
+      + 추가
+
+    </button>
+
+
+    <!-- =====================================================
+         이름 추가 입력
+    ====================================================== -->
+
+    <div
+      id="addArea"
+      class="add-area">
+
+      <input
+        type="text"
+        id="memberNameInput"
+        placeholder="이름을 입력하세요"
+        onkeydown="handleEnter(event)">
+
+
+      <button
+        type="button"
+        class="save-add-button"
+        onclick="addMember()">
+
+        추가
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cancel-add-button"
+        onclick="hideAddArea()">
+
+        취소
+
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         전체 명단
+    ====================================================== -->
+
+    <div
+      id="memberList"
+      class="member-list">
+    </div>
+
+
+  </div>
+
+
+  <script>
+
+
+    /* =========================================================
+       명단 관리 Apps Script 주소
+    ========================================================= */
+
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbwYtNDFnBi2ow5tU1IpbCtp0nQS1Vl3v8uwKUQtX9cX4BpysIlwmEquAO46tfndyChfqw/exec";
+
+
+    /* =========================================================
+       명단
+    ========================================================= */
+
+    let members = [];
+
+
+    /* =========================================================
+       Google Sheets에서 명단 불러오기
+    ========================================================= */
+
+    async function loadMembers() {
+
+      try {
+
+        const response =
+          await fetch(
+            SCRIPT_URL +
+            "?action=members"
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "명단을 불러오지 못했습니다."
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        members =
+          Array.isArray(data)
+            ? data
+            : [];
+
+
+        /*
+         * 가나다순 정렬
+         */
+
+        sortMembers();
+
+
+        renderMembers();
+
+
+      } catch (error) {
+
+        console.error(
+          "명단 불러오기 오류:",
+          error
+        );
+
+
+        document.getElementById(
+          "memberList"
+        ).innerHTML = `
+
+          <div class="empty-message">
+            명단을 불러오지 못했습니다.
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       가나다순 정렬
+    ========================================================= */
+
+    function sortMembers() {
+
+      members.sort(
+        function(a, b) {
+
+          return String(a.name)
+            .localeCompare(
+              String(b.name),
+              "ko"
+            );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       Google Sheets에 저장
+    ========================================================= */
+
+   async function saveMembersToSheet() {
+
+  try {
+
+    const response =
+      await fetch(
+        SCRIPT_URL,
+        {
+          method: "POST",
+
+          body: JSON.stringify({
+            action: "saveMembers",
+            members: members
+          })
+        }
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let result;
+
+
+    try {
+
+      result =
+        JSON.parse(text);
+
+    } catch (error) {
+
+      console.error(
+        "서버 응답:",
+        text
+      );
+
+      throw new Error(
+        "Apps Script에서 올바른 응답을 받지 못했습니다."
+      );
+
+    }
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error ||
+        "저장에 실패했습니다."
+      );
+
+    }
+
+
+    return true;
+
+
+  } catch (error) {
+
+    console.error(
+      "명단 저장 오류:",
+      error
+    );
+
+
+    alert(
+      "명단 저장에 실패했습니다.\n\n" +
+      error.message
+    );
+
+
+    return false;
+
+  }
+
+}
+
+    /* =========================================================
+       화면 표시
+    ========================================================= */
+
+    function renderMembers() {
+
+      const list =
+        document.getElementById(
+          "memberList"
+        );
+
+
+      list.innerHTML = "";
+
+
+      /*
+       * 전체 명단 표시
+       */
+
+      if (
+        members.length === 0
+      ) {
+
+        list.innerHTML = `
+
+          <div class="empty-message">
+            등록된 명단이 없습니다.
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      members.forEach(
+        function(member, index) {
+
+          const row =
+            document.createElement(
+              "div"
+            );
+
+
+          row.className =
+            "member-row";
+
+
+          row.innerHTML = `
+
+  <div class="member-main">
+
+    <div class="member-name">
+      ${escapeHtml(member.name)}
+    </div>
+
+
+    <!-- 봉사자 -->
+
+    <label class="role">
+
+      <input
+        type="checkbox"
+        ${member.volunteer ? "checked" : ""}
+        onchange="
+          changeRole(
+            ${index},
+            'volunteer',
+            this.checked
+          )
+        ">
+
+      <span
+        class="role-circle">
+      </span>
+
+      봉사자
+
+    </label>
+
+
+    <!-- 전시대 -->
+
+    <label class="role">
+
+      <input
+        type="checkbox"
+        ${member.exhibition ? "checked" : ""}
+        onchange="
+          changeRole(
+            ${index},
+            'exhibition',
+            this.checked
+          )
+        ">
+
+      <span
+        class="role-circle">
+      </span>
+
+      전시대
+
+    </label>
+
+
+    <!-- 삭제 -->
+
+    <button
+      type="button"
+      class="delete-button"
+      onclick="
+        deleteMember(${index})
+      ">
+
+      삭제
+
+    </button>
+
+  </div>
+
+
+   <!-- 추가 명단 정보 -->
+
+  <div class="member-extra">
+
+
+    <!-- 남여 -->
+
+    <label class="member-field">
+
+      <span class="member-field-label">
+        남여
+      </span>
+
+      <select
+        class="member-select ${member.gender ? "has-value" : ""}"
+        onchange="
+          changeMemberField(
+            ${index},
+            'gender',
+            this.value
+          )
+        ">
+
+        <option
+          value=""
+          ${!member.gender ? "selected" : ""}>
+          선택
+        </option>
+
+        <option
+          value="형제"
+          ${member.gender === "형제" ? "selected" : ""}>
+          형제
+        </option>
+
+        <option
+          value="자매"
+          ${member.gender === "자매" ? "selected" : ""}>
+          자매
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <!-- 집단 -->
+
+    <label class="member-field">
+
+      <span class="member-field-label">
+        집단
+      </span>
+
+      <select
+        class="member-select ${member.group ? "has-value" : ""}"
+        onchange="
+          changeMemberField(
+            ${index},
+            'group',
+            this.value
+          )
+        ">
+
+        <option
+          value=""
+          ${!member.group ? "selected" : ""}>
+          선택
+        </option>
+
+        <option
+          value="A"
+          ${member.group === "A" ? "selected" : ""}>
+          A
+        </option>
+
+        <option
+          value="B"
+          ${member.group === "B" ? "selected" : ""}>
+          B
+        </option>
+
+        <option
+          value="C"
+          ${member.group === "C" ? "selected" : ""}>
+          C
+        </option>
+
+        <option
+          value="D"
+          ${member.group === "D" ? "selected" : ""}>
+          D
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <!-- 직책 -->
+
+    <label class="member-field">
+
+      <span class="member-field-label">
+        직책
+      </span>
+
+      <select
+        class="member-select ${member.position ? "has-value" : ""}"
+        onchange="
+          changeMemberField(
+            ${index},
+            'position',
+            this.value
+          )
+        ">
+
+        <option
+          value=""
+          ${!member.position ? "selected" : ""}>
+          선택
+        </option>
+
+        <option
+          value="장로"
+          ${member.position === "장로" ? "selected" : ""}>
+          장로
+        </option>
+
+        <option
+          value="봉사의종"
+          ${member.position === "봉사의종" ? "selected" : ""}>
+          봉사의종
+        </option>
+
+        <option
+          value="전도인"
+          ${member.position === "전도인" ? "selected" : ""}>
+          전도인
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <!-- 신분 -->
+
+    <label class="member-field">
+
+      <span class="member-field-label">
+        신분
+      </span>
+
+      <select
+        class="member-select ${member.status ? "has-value" : ""}"
+        onchange="
+          changeMemberField(
+            ${index},
+            'status',
+            this.value
+          )
+        ">
+
+        <option
+          value=""
+          ${!member.status ? "selected" : ""}>
+          선택
+        </option>
+
+        <option
+          value="P"
+          ${member.status === "P" ? "selected" : ""}>
+          P
+        </option>
+        
+         <option
+          value="SP"
+          ${member.status === "SP" ? "selected" : ""}>
+          SP
+        </option>
+        
+        <option
+          value="CO"
+          ${member.status === "CO" ? "selected" : ""}>
+          CO
+        </option>
+        
+        <option
+          value="전도인"
+          ${member.status === "전도인" ? "selected" : ""}>
+          전도인
+        </option>
+
+      </select>
+
+    </label>
+
+
+  </div>
+`;
+
+          list.appendChild(row);
+
+        }
+      );
+
+    }
+
+
+   /* =========================================================
+   봉사자 / 전시대 변경
+========================================================= */
+
+async function changeRole(
+  index,
+  role,
+  checked
+) {
+
+  if (!members[index]) {
+    return;
+  }
+
+
+  const previousValue =
+    members[index][role];
+
+
+  /*
+   * 화면 상태 변경
+   */
+
+  members[index][role] =
+    checked;
+
+
+  /*
+   * 바로 가나다순으로 다시 표시
+   */
+
+  sortMembers();
+
+  renderMembers();
+
+
+  /*
+   * Google Sheets 저장
+   */
+
+  const saved =
+    await saveMembersToSheet();
+
+
+  /*
+   * 저장 실패 시 원래 상태로 복구
+   */
+
+  if (!saved) {
+
+    /*
+     * 이름을 기준으로 다시 찾습니다.
+     */
+
+    const member =
+      members.find(
+        function(item) {
+
+          return (
+            item.name ===
+            members[index]?.name
+          );
+
+        }
+      );
+
+
+    if (member) {
+
+      member[role] =
+        previousValue;
+
+    }
+
+
+    renderMembers();
+
+  }
+
+}
+
+
+/* =========================================================
+   집단 / 직책 / 파이오니아 변경
+========================================================= */
+
+async function changeMemberField(
+  index,
+  field,
+  value
+) {
+
+  if (!members[index]) {
+    return;
+  }
+
+
+  const previousValue =
+    members[index][field];
+
+
+  members[index][field] =
+    value;
+
+
+  renderMembers();
+
+
+  const saved =
+    await saveMembersToSheet();
+
+
+  if (!saved) {
+
+    const member =
+      members[index];
+
+    if (member) {
+
+      member[field] =
+        previousValue;
+
+    }
+
+    renderMembers();
+
+  }
+
+}
+
+    /* =========================================================
+       + 추가 영역 표시
+    ========================================================= */
+
+    function showAddArea() {
+
+      const area =
+        document.getElementById(
+          "addArea"
+        );
+
+
+      area.classList.add(
+        "show"
+      );
+
+
+      const input =
+        document.getElementById(
+          "memberNameInput"
+        );
+
+
+      input.value = "";
+
+      input.focus();
+
+    }
+
+
+    /* =========================================================
+       추가 취소
+    ========================================================= */
+
+    function hideAddArea() {
+
+      const area =
+        document.getElementById(
+          "addArea"
+        );
+
+
+      area.classList.remove(
+        "show"
+      );
+
+
+      document.getElementById(
+        "memberNameInput"
+      ).value = "";
+
+    }
+
+
+    /* =========================================================
+       명단 추가
+    ========================================================= */
+
+    async function addMember() {
+
+      const input =
+        document.getElementById(
+          "memberNameInput"
+        );
+
+
+      const name =
+        input.value.trim();
+
+
+      if (!name) {
+
+        alert(
+          "이름을 입력해주세요."
+        );
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      /*
+       * 중복 확인
+       */
+
+      const exists =
+        members.some(
+          function(member) {
+
+            return (
+              member.name ===
+              name
+            );
+
+          }
+        );
+
+
+      if (exists) {
+
+        alert(
+          "이미 등록된 이름입니다."
+        );
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      /*
+       * 새 사람 추가
+       *
+       * 처음에는 두 역할 모두
+       * 선택하지 않습니다.
+       */
+
+      const newMember = {
+
+        name:
+          name,
+
+        volunteer:
+          false,
+
+        exhibition:
+          false
+
+      };
+
+
+      members.push(
+        newMember
+      );
+
+
+      /*
+       * 가나다순 정렬
+       */
+
+      sortMembers();
+
+
+      renderMembers();
+
+
+      /*
+       * 입력창 닫기
+       */
+
+      hideAddArea();
+
+
+      /*
+       * Google Sheets 저장
+       */
+
+      const saved =
+        await saveMembersToSheet();
+
+
+      /*
+       * 저장 실패 시 복구
+       */
+
+      if (!saved) {
+
+        const index =
+          members.indexOf(
+            newMember
+          );
+
+
+        if (index !== -1) {
+
+          members.splice(
+            index,
+            1
+          );
+
+        }
+
+
+        renderMembers();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       명단 삭제
+    ========================================================= */
+
+    async function deleteMember(
+      index
+    ) {
+
+      if (!members[index]) {
+        return;
+      }
+
+
+      const deletedMember =
+        members[index];
+
+
+      const name =
+        deletedMember.name;
+
+
+      if (
+        !confirm(
+          `"${name}"을(를) 명단에서 삭제하시겠습니까?`
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      /*
+       * 화면에서 삭제
+       */
+
+      members.splice(
+        index,
+        1
+      );
+
+
+      renderMembers();
+
+
+      /*
+       * Google Sheets 저장
+       */
+
+      const saved =
+        await saveMembersToSheet();
+
+
+      /*
+       * 저장 실패 시 복구
+       */
+
+      if (!saved) {
+
+        members.splice(
+          index,
+          0,
+          deletedMember
+        );
+
+
+        sortMembers();
+
+        renderMembers();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       Enter로 추가
+    ========================================================= */
+
+    function handleEnter(event) {
+
+      if (
+        event.key ===
+        "Enter"
+      ) {
+
+        addMember();
+
+      }
+
+    }
+
+
+    /* =========================================================
+       HTML 문자 안전 처리
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+      return String(value)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================================
+       최초 실행
+    ========================================================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        loadMembers();
+
+      }
+    );
+
+
+  </script>
+
+</body>
+</html>
