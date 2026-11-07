@@ -30,16 +30,17 @@ body{margin:0;font-family:Arial,"Malgun Gothic",sans-serif;background:#f3f4f6;co
 .settings-button{right:10px}
 
 .page{
-  position:fixed;top:62px;bottom:62px;left:0;right:0;
-  min-height:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y;
-  overscroll-behavior-y:contain;
-  scrollbar-width:none;
-  -ms-overflow-style:none;
-  padding:15px 10px 20px;max-width:900px;width:100%;margin:0 auto;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:transparent;
 }
 
 .page::-webkit-scrollbar{
@@ -48,9 +49,30 @@ body{margin:0;font-family:Arial,"Malgun Gothic",sans-serif;background:#f3f4f6;co
 }
   
 #content{
+  position:absolute;
+  top:62px;
+  bottom:60px;
+  left:0;
+  right:0;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  padding:15px 8px 20px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  overscroll-behavior-y:contain;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
   font-size:calc(16px * var(--scale));
 }
 
+#content::-webkit-scrollbar{
+  display:none;
+  width:0;
+}
+  
 #content .program-line,
 #content .program-line div,
 #content .program-line span,
@@ -71,7 +93,7 @@ body{margin:0;font-family:Arial,"Malgun Gothic",sans-serif;background:#f3f4f6;co
   text-align:center;margin:0 0 20px;font-size:13px;font-weight:bold;
 }
 .program-card{
-  width:100%;max-width:680px;margin:0 auto 24px;padding:12px;
+  width:100%;max-width:none;margin:0 0 24px;padding:12px;
   border:5px solid #AEB6BF;border-radius:16px;
   background:linear-gradient(145deg,#fff,#f7faff);
   box-shadow:0 6px 18px rgba(24,50,74,.08);
@@ -190,7 +212,7 @@ body.dark-mode .settings-panel button{
 }
 
 @media(max-width:520px){
-  .page{padding:10px 5px 15px}
+  #content{padding:10px 8px 15px}
   .program-card{padding:12px;border-width:5px;border-radius:16px}
   .date-title{margin:4px 0 16px;padding:12px 8px;font-size:25px}
   .section-title{font-size:25px}
@@ -208,10 +230,10 @@ body.dark-mode .settings-panel button{
 
   .special-event-card {
   width: 100%;
-  max-width: 680px;
+  max-width: none;
   box-sizing: border-box;
   padding: 12px;
-  margin: 0 auto 24px;
+  margin: 0 0 24px;
   border: 5px solid #AEB6BF;
   border-radius: 16px;
   background: linear-gradient(145deg, #fff, #f7faff);
@@ -798,17 +820,51 @@ function openingRow(label,name){
 
   const value = document.createElement("div");
   value.className = "name";
-  value.textContent = name || "";
   value.style.cssText =
     "font-size:22px;color:#222;font-weight:800;text-align:right;";
+
+  if (label === "사회자" && name && name.startsWith("(회계 광고) ")) {
+    const notice = document.createElement("span");
+    notice.textContent = "(회계 광고)";
+    notice.style.cssText =
+      "font-size:18px;color:gray;font-weight:400;";
+
+    value.appendChild(notice);
+    value.appendChild(document.createTextNode(" " + name.substring("(회계 광고) ".length)));
+  } else {
+    value.textContent = name || "";
+  }
 
   row.append(role,value);
   return row;
 }
 
-card.appendChild(openingRow("사회자",cell(c,2)));
+// 매월 두 번째 화요일 계산
+const secondTuesday = new Date(
+  displayDate.getFullYear(),
+  displayDate.getMonth(),
+  1
+);
+
+const firstDayOfWeek = secondTuesday.getDay();
+const daysUntilTuesday = (2 - firstDayOfWeek + 7) % 7;
+
+secondTuesday.setDate(1 + daysUntilTuesday + 7);
+
+// 표시 날짜가 두 번째 화요일인지 확인
+const isSecondTuesday =
+  displayDate.getFullYear() === secondTuesday.getFullYear() &&
+  displayDate.getMonth() === secondTuesday.getMonth() &&
+  displayDate.getDate() === secondTuesday.getDate();
+
+// 사회자 이름 앞에 문구 추가
+const chairmanName = cell(c,2);
+const chairmanText = isSecondTuesday
+  ? "(회계 광고) " + chairmanName
+  : chairmanName;
+
+card.appendChild(openingRow("사회자", chairmanText));
 card.appendChild(openingRow("시작 기도",cell(c,3)));
-    
 
     // 성경에 담긴 보물
     section(card,"성경에 담긴 보물","blue",true);
@@ -1125,13 +1181,47 @@ const watchVideo = cell(c,40);
       card.appendChild(row);
     }
 
-// 10. 회중 성서 연구
-const studyTitle = cell(c,42);
+// 10. 회중 성서 연구 / 순회 방문 주간에는 봉사강연
+const studyTitle = isRotationVisit
+  ? cell(c,45)
+  : cell(c,42);
+
 const studyTime = cell(c,41);
 const studyReader = cell(c,43);
 const studySocial = cell(c,44);
 
-if(studyTitle || studyTime || studyReader || studySocial){
+if (isRotationVisit) {
+
+  // 순회 방문 주간: 봉사강연 제목 + 담당자 이름
+  const row = document.createElement("div");
+  row.className = "program-line";
+  row.style.cssText =
+    "display:grid;grid-template-columns:minmax(0,1fr) auto;" +
+    "align-items:center;gap:8px;";
+
+ const title = document.createElement("div");
+title.textContent = cell(c,42);
+title.style.cssText =
+  "font-size:calc(18px * var(--scale));" +
+  "color:#b52b20;font-weight:800;text-align:left;";
+
+const studyTimeText = document.createElement("span");
+studyTimeText.textContent = " " + (studyTime || "30분");
+studyTimeText.style.cssText =
+  "font-size:15px;color:#777;font-weight:400;";
+
+title.appendChild(studyTimeText);
+
+  const person = document.createElement("div");
+  person.textContent = studySocial;
+  person.style.cssText =
+    "font-size:calc(22px * var(--scale));" +
+    "color:#222;font-weight:800;text-align:right;";
+
+  row.append(title, person);
+  card.appendChild(row);
+
+} else if (studyTitle || studyTime || studyReader || studySocial) {
 
   const titleRow = document.createElement("div");
   titleRow.className = "program-line";
