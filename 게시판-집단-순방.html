@@ -1211,7 +1211,7 @@ body.dark-mode .sunday-afternoon {
   color: red;
 }
 
-/* ===== 오전·오후 시간과 장소를 한 버튼에 표시 ===== */
+/* ===== 오전·오후 시간과 장소를 한 버튼에 위아래 두 줄로 표시 ===== */
 
 .schedule-time,
 .wednesday-time,
@@ -1220,15 +1220,15 @@ body.dark-mode .sunday-afternoon {
 .saturday-time,
 .sunday-time {
   width: calc(100% - 12px);
-  min-height: 58px;
+  min-height: 68px;
   margin: 6px 6px 0;
   padding: 10px 8px;
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
 
   text-align: left;
   white-space: nowrap;
@@ -1257,9 +1257,9 @@ body.dark-mode .sunday-afternoon {
   flex-shrink: 0;
   font-size: 20px;
   font-weight: 800;
-  text-align: right;
+  text-align: left;
   white-space: nowrap;
-}  
+}
   
 </style>
 </head>
