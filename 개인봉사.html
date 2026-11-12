@@ -1588,7 +1588,7 @@ const numberLink =
 
             <a
               href="${esc(numberLink)}"
-              onclick="if (this.href.startsWith('https://bukbu.github.io/')) { location.href = this.href; return false; }"
+              onclick="if (this.href.startsWith('https://bukbu.github.io/')) { window.open(this.href); return false; }"
 
               ${number}
 
