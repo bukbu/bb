@@ -1565,17 +1565,17 @@ function render(result){
     };
 
 
-    const numberKey =
-      String(x.number ?? "").trim();
+   const numberKey =
+  String(x.number ?? "").trim();
 
 
-    const numClass = "num";
+const numClass = "num";
 
 
-    const numberLink =
-      x.linkUrl ||
-      actualLinks[numberKey] ||
-      "";
+const numberLink =
+  actualLinks[numberKey] ||
+  x.linkUrl ||
+  "";
 
 
     html += `
