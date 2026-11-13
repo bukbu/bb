@@ -13,18 +13,32 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-  line-height:1.65
+  line-height:1.65;
+
+  /* 화면 전체 높이 고정 */
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+
+  /* 화면 전체 스크롤 방지 */
+  overflow:hidden;
 }
+  
 body.dark{
   --bg:#101820;--card:#1b2833;--text:#edf3f8;
   --muted:#aab8c5;--line:#344452;--accent:#8fc5ed;--soft:#263b4c;
 }
+  
 header{
-  position:sticky;
-  top:0;
+  position:relative;
   z-index:10;
+  flex-shrink:0;
+
   background:var(--navy);
   color:white;
   padding:env(safe-area-inset-top) 16px 8px;
@@ -42,8 +56,20 @@ header{
 }
 main{
   width:min(100% - 24px,700px);
-  margin:18px auto 40px;
-  padding-bottom:calc(24px + env(safe-area-inset-bottom))
+  margin:0 auto;
+
+  /* 남는 화면을 본문 영역으로 사용 */
+  flex:1;
+  min-height:0;
+
+  /* 본문에서만 스크롤 */
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+
+  padding-top:18px;
+  padding-bottom:calc(80px + env(safe-area-inset-bottom));
 }
 .date-line{
   display:flex;justify-content:space-between;
@@ -233,24 +259,21 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:10px 0 24px}
 }
 
 .bottom-player .play-btn {
-  width: 66px;
-  height: 66px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #ffffff19;
   color: white;
 }
 
 .bottom-player .small-control {
-  width: 52px;
-  height: 52px;
+  width: 33px;
+  height: 33px;
   border-radius: 50%;
   background: #ffffff19;
   color: white;
 }
 
-main {
-  padding-bottom: calc(115px + env(safe-area-inset-bottom));
-}
 /* ===== 설정 팝업 ===== */
 
 .settings-overlay {
