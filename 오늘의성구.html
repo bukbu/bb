@@ -386,17 +386,13 @@ body.dark .bottom-player {
 
   <div class="date-navigation">
 
-    <button id="prevDateBtn">
-      ‹ 어제
-    </button>
+   <button id="prevDateBtn">‹</button>
 
-    <div id="selectedDateLabel">
-      오늘
-    </div>
+<button id="selectedDateLabel" type="button">
+  오늘
+</button>
 
-    <button id="nextDateBtn">
-      내일 ›
-    </button>
+<button id="nextDateBtn">›</button>
 
   </div>
 
@@ -533,23 +529,15 @@ function formatDate(date) {
 }
 
 function renderDateNavigation() {
-  const prev = new Date(selectedDate);
-  prev.setDate(prev.getDate()-1);
-
-  const next = new Date(selectedDate);
-  next.setDate(next.getDate()+1);
-
   const isToday =
     selectedDate.toDateString() === kst.toDateString();
 
-  $("prevDateBtn").textContent =
-    `‹ ${prev.getMonth()+1}/${prev.getDate()}`;
+  $("prevDateBtn").textContent = "‹";
 
   $("selectedDateLabel").textContent =
     isToday ? "오늘" : formatDate(selectedDate);
 
-  $("nextDateBtn").textContent =
-    `${next.getMonth()+1}/${next.getDate()} ›`;
+  $("nextDateBtn").textContent = "›";
 }
 
 renderDateNavigation();
@@ -620,11 +608,10 @@ function parseDailyPage(markdown, date) {
 }
 
 function applyFontSize() {
-  const size = Number($("fontSelect").value);
   const verse = $("verseContent").querySelector(".verse");
 
   if (verse) {
-    verse.style.fontSize = (size + 4) + "px";
+    verse.style.fontSize = "30px";
   }
 }
 
@@ -824,6 +811,40 @@ $("restartBtn").onclick = () => {
 // 정지
 $("stopBtn").onclick = stopSpeech;
 
+// 뒤로가기
+$("backBtn").onclick = () => {
+  history.back();
+};
+// 어제 날짜로 이동
+$("prevDateBtn").onclick = () => {
+  stopSpeech();
+
+  selectedDate.setDate(selectedDate.getDate() - 1);
+
+  renderDateNavigation();
+  loadDaily();
+};
+
+// 내일 날짜로 이동
+$("nextDateBtn").onclick = () => {
+  stopSpeech();
+
+  selectedDate.setDate(selectedDate.getDate() + 1);
+
+  renderDateNavigation();
+  loadDaily();
+};
+
+// 오늘 날짜로 돌아오기
+$("selectedDateLabel").onclick = () => {
+  stopSpeech();
+
+  selectedDate.setTime(kst.getTime());
+
+  renderDateNavigation();
+  loadDaily();
+};
+  
 // 속도 선택
 document.querySelectorAll(".speed-btn").forEach(btn => {
   btn.onclick = () => {
