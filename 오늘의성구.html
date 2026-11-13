@@ -8,8 +8,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>오늘의 성구 읽기</title>
 <style>
+html {
+  background: #18324a;
+}
+
 :root{
-  --navy:#193650;--bg:#f2f5f8;--card:#fff;
+  --navy:#18324a;--bg:#f2f5f8;--card:#fff;
   --text:#203246;--muted:#6b7b8b;--line:#e1e7ed;
   --accent:#2e6f9e;--soft:#eaf2f8;
 }
@@ -41,7 +45,7 @@ header{
   z-index:10;
   flex-shrink:0;
 
-  background:#18324a;
+  background:#18324a !important;
   color:white;
   padding:calc(env(safe-area-inset-top) + 6px) 16px 6px;
 }
@@ -253,7 +257,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:10px 0 24px}
   padding: 6px 16px;
   padding-bottom: calc(6px + env(safe-area-inset-bottom));
 
-  background: var(--navy);
+  background: #18324a !important;
   border-top: 1px solid #ffffff40;
 }
 
