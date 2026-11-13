@@ -97,10 +97,10 @@
     }
 
     /* 본문 */
-    #content {
-      width: 100%;
-      padding: 18px 10px 24px;
-    }
+   #content {
+  width: 100%;
+  padding: 18px 10px 90px;
+}
 
     /* 월별 광고 박스 */
     .notice-month {
@@ -153,14 +153,23 @@
       padding-left: 8px;
     }
 
-    /* 상단 버튼 3개 */
-    .group-top-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      width: 100%;
-      margin: 18px 0 10px;
-    }
+   /* 화면 하단 고정 버튼 3개 */
+.group-top-buttons {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 900;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+
+  background: #fff;
+}
 
     .group-top-buttons button {
       width: 100%;
