@@ -699,6 +699,12 @@ function selectVoice(gender) {
     /^ko([-_]|$)/i.test(v.lang)
   );
 
+  if (!korean.length) {
+    selectedVoice = null;
+    alert("기기에서 한국어 음성을 찾지 못했습니다.");
+    return;
+  }
+
   const malePattern =
     /male|man|남성|injoon|inho|minjun/i;
 
@@ -713,29 +719,12 @@ function selectVoice(gender) {
     pattern.test(v.name)
   );
 
-  if (!candidates.length) {
-    selectedVoice = null;
-
-    alert(
-      gender === "male"
-        ? "기기에서 남성 한국어 음성을 찾지 못했습니다."
-        : "기기에서 여성 한국어 음성을 찾지 못했습니다."
-    );
-
-    return;
+  if (candidates.length) {
+    selectedVoice = candidates[0];
+  } else {
+    selectedVoice = korean[0];
   }
 
-  candidates.sort((a,b) => {
-    const aScore =
-      /natural|online|neural/i.test(a.name) ? 1 : 0;
-
-    const bScore =
-      /natural|online|neural/i.test(b.name) ? 1 : 0;
-
-    return bScore-aScore;
-  });
-
-  selectedVoice = candidates[0];
   selectedGender = gender;
 }
 function getReadText() {
