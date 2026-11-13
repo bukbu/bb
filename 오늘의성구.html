@@ -689,6 +689,11 @@ let readSpeed = 1.0;
 function loadVoices() {
   if (!("speechSynthesis" in window)) return;
 
+  const voices = speechSynthesis.getVoices();
+
+  // 음성 목록이 아직 준비되지 않았으면 기다립니다.
+  if (!voices.length) return;
+
   selectVoice(selectedGender);
 }
 
@@ -879,10 +884,11 @@ $("darkBtn").onclick = () => {
 
 // 글자 크기 변경
 $("fontSelect").onchange = applyFontSize;
+  
 // 음성 불러오기
 if ("speechSynthesis" in window) {
-  loadVoices();
   speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
 }
 
 // 오늘의 성구 불러오기
