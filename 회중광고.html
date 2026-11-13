@@ -99,7 +99,7 @@
     /* 본문 */
    #content {
   width: 100%;
-  padding: 18px 10px 90px;
+  padding: 18px 10px 80px;
 }
 
     /* 월별 광고 박스 */
@@ -153,65 +153,40 @@
       padding-left: 8px;
     }
 
-   /* 화면 하단 고정 버튼 3개 */
+/* =========================================================
+   하단 메뉴 - 일요일과 동일한 디자인
+========================================================= */
+
 .group-top-buttons {
   position: fixed;
   left: 0;
+  right: 0;
   bottom: 0;
-  z-index: 900;
+
+  height: 60px;
+  z-index: 1000;
 
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
 
-  width: 100%;
-  margin: 0;
-  padding: 10px;
-
-  background: #fff;
+  background: #18324a;
+  border-top: 1px solid rgba(255,255,255,.10);
 }
 
-    .group-top-buttons button {
-      width: 100%;
-      min-width: 0;
-      height: 44px;
-      padding: 0 4px;
-      border: none;
-      border-radius: 6px;
-      background: #3374A9;
-      color: #fff;
-      font-size: 20px;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-    }
+.group-top-buttons button {
+  border: 0;
+  background: transparent;
+  color: #fff;
 
-    .loading-message,
-    .error-message,
-    .empty-message {
-      padding: 22px 12px;
-      color: #526273;
-      font-size: 18px;
-      text-align: center;
-      line-height: 1.8;
-    }
+  font-size: 20px;
+  font-weight: 700;
 
-    .error-message {
-      color: #a52b2b;
-    }
+  cursor: pointer;
+}
 
-    .refresh-button {
-      display: block;
-      margin: 0 auto 16px;
-      padding: 9px 18px;
-      border: 0;
-      border-radius: 9px;
-      background: #193650;
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+.group-top-buttons button:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,.25);
+}
 
     /* 설정창 */
     .settings-panel {
