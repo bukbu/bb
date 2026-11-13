@@ -385,6 +385,20 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:10px 0 24px}
   margin-top: 17px;
 }
 
+/* 설정창 하단 닫기 버튼 */
+.close-settings-bottom {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--navy);
+  color: white;
+  font-size: 16px;
+  font-weight: 750;
+}
+
 /* ===== 어두운 화면 ===== */
 
 body.dark .settings-popup {
@@ -530,9 +544,13 @@ body.dark .speed-btn.active {
       <option value="23">아주 크게</option>
     </select>
 
-    <p class="note">
+     <p class="note">
       기기에 설치된 한국어 음성 중 선택한 성별에 맞는 음성을 사용합니다.
     </p>
+
+    <button id="closeSettingsBottomBtn" class="close-settings-bottom">
+      닫기
+    </button>
 
   </div>
 
@@ -768,15 +786,22 @@ function selectVoice(gender) {
     pattern.test(v.name)
   );
 
-  if (candidates.length) {
-    selectedVoice = candidates[0];
-  } else {
-    selectedVoice = korean[0];
+  if (!candidates.length) {
+    selectedVoice = null;
+
+    alert(
+      gender === "male"
+        ? "남성 한국어 음성을 찾지 못했습니다."
+        : "여성 한국어 음성을 찾지 못했습니다."
+    );
+
+    return;
   }
 
+  selectedVoice = candidates[0];
   selectedGender = gender;
 }
-function getReadText() {
+  function getReadText() {
   if (readMode === "verse") return verseText;
   return [verseText,commentaryText].filter(Boolean).join("\n\n");
 }
@@ -921,6 +946,10 @@ $("settingsBtn").onclick = () => {
 
 // 설정창 닫기
 $("closeSettingsBtn").onclick = () => {
+  $("settingsOverlay").classList.remove("open");
+};
+
+$("closeSettingsBottomBtn").onclick = () => {
   $("settingsOverlay").classList.remove("open");
 };
 
