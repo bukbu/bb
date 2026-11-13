@@ -753,12 +753,10 @@ function loadVoices() {
 
   const voices = speechSynthesis.getVoices();
 
-  // 음성 목록이 아직 준비되지 않았으면 기다립니다.
+  // 음성 목록이 준비되었는지만 확인합니다.
+  // 페이지를 처음 열 때는 남성 음성을 선택하지 않습니다.
   if (!voices.length) return;
-
-  selectVoice(selectedGender);
 }
-
 function selectVoice(gender) {
   const voices = speechSynthesis.getVoices();
 
