@@ -547,10 +547,10 @@ body.dark .speed-btn.active {
 
 function getWolUrl(date) {
   const y = date.getFullYear();
-  const m = date.getMonth()+1;
+  const m = date.getMonth() + 1;
   const d = date.getDate();
 
-  return `https://wol.jw.org/ko/wol/dt/r8/lp-ko/${y}/${m}/${d}`;
+  return `https://wol.jw.org/ko/wol/h/r8/lp-ko/${y}/${m}/${d}`;
 }
 
 function getReaderUrl(date) {
@@ -561,12 +561,11 @@ const $ = id => document.getElementById(id);
 let verseText = "";
 let commentaryText = "";
 let referenceText = "";
-let readMode = "verse";
+let readMode = "all";
 let utterances = [];
 let currentIndex = 0;
 let isPaused = false;
 let selectedVoice = null;
-
 const now = new Date();
 
 const kst = new Date(now.toLocaleString("en-US", {
@@ -611,60 +610,86 @@ function cleanMarkdown(s) {
     .trim();
 }
 
+
+
 function parseDailyPage(markdown, date) {
   const month = date.getMonth() + 1;
   const day = date.getDate();
 
-  const lines = markdown.replace(/\r/g,"")
-    .split("\n").map(x=>x.trim());
+  const lines = markdown.replace(/\r/g, "")
+    .split("\n")
+    .map(x => x.trim());
 
   const headingPattern = new RegExp(
-    "^#{1,6}\\s*" + month + "월\\s*" + day + "일(?:\\s|$)"
+    "^#{1,6}\\s*" + month + "월\\s*" + day +
+    "일(?:\\s+[월화수목금토일]요일)?\\s*$"
   );
 
-  let start = lines.findIndex(line => headingPattern.test(line));
+  let start = lines.findIndex(line =>
+    headingPattern.test(line)
+  );
 
   if (start < 0) {
-    start = lines.findIndex(line =>
-      new RegExp("^" + month + "월\\s*" + day +
-      "일\\s*[월화수목금토일]요일?$").test(line)
+    throw new Error(
+      month + "월 " + day + "일 날짜 제목을 찾지 못했습니다."
     );
-  }
-
-  if (start < 0) {
-    throw new Error("오늘 날짜의 성구를 찾지 못했습니다.");
   }
 
   const section = [];
 
-  for (let i=start+1;i<lines.length;i++) {
-    if (/^#{1,6}\s*\d{1,2}월\s*\d{1,2}일/.test(lines[i])) break;
-    if (/날마다 성경을 검토함/.test(lines[i])) break;
-    if (lines[i]) section.push(lines[i]);
+  for (let i = start + 1; i < lines.length; i++) {
+    if (/^#{1,6}\s*\d{1,2}월\s*\d{1,2}일/.test(lines[i])) {
+      break;
+    }
+
+    if (/날마다 성경을 검토함/.test(lines[i])) {
+      break;
+    }
+
+    if (lines[i]) {
+      section.push(lines[i]);
+    }
   }
 
-  const verseLineIndex = section.findIndex(x =>
-    /【\d+†/.test(x) || /—\s*[【\[]/.test(x)
+  const verseLineIndex = section.findIndex(line =>
+    /—\s*_?\[/.test(line)
   );
 
   if (verseLineIndex < 0) {
-    throw new Error("성구 본문을 구분하지 못했습니다.");
+    throw new Error("해당 날짜의 성구 본문을 찾지 못했습니다.");
   }
 
   const rawVerse = section[verseLineIndex];
-  const refMatch = rawVerse.match(/【\d+†([^】]+)】/);
 
-  referenceText = refMatch ? cleanMarkdown(refMatch[1]) : "";
-
-  verseText = cleanMarkdown(
-    rawVerse.replace(/—\s*【\d+†[^】]+】\.?/g,"")
+  const markdownRefMatch = rawVerse.match(
+    /—\s*_?\[_?([^\]]+?)_?\]\((https?:\/\/[^)]+)\)/
   );
 
-  commentaryText = section.slice(verseLineIndex+1)
-    .map(cleanMarkdown).filter(Boolean).join("\n\n");
+  referenceText = markdownRefMatch
+    ? cleanMarkdown(markdownRefMatch[1])
+    : "";
+
+  verseText = cleanMarkdown(
+    rawVerse.replace(
+      /—\s*_?\[_?[^\]]+?_?\]\(https?:\/\/[^)]+\)_?\.?/g,
+      ""
+    )
+  );
+
+  commentaryText = section
+    .slice(verseLineIndex + 1)
+    .map(cleanMarkdown)
+    .filter(Boolean)
+    .join("\n\n");
+
+  if (!verseText || !commentaryText) {
+    throw new Error("성구 또는 해설을 완전히 추출하지 못했습니다.");
+  }
 
   renderContent();
 }
+
+
 
 function applyFontSize() {
   const verse = $("verseContent").querySelector(".verse");
@@ -678,16 +703,19 @@ function applyFontSize() {
   }
 }
 
+
+
 function renderContent() {
   $("verseContent").innerHTML =
     `<div class="verse"></div>
-     <div class="reference"></div>`;
+     <div class="commentary"></div>`;
 
   $("verseContent").querySelector(".verse").textContent =
-    verseText;
+    verseText +
+    (referenceText ? " — " + referenceText : "");
 
-  $("verseContent").querySelector(".reference").textContent =
-    referenceText ? "— " + referenceText : "";
+  $("verseContent").querySelector(".commentary").textContent =
+    commentaryText;
 
   applyFontSize();
 }
@@ -715,9 +743,12 @@ async function loadDaily() {
       throw new Error("자료 서버 응답 오류");
     }
 
-    const text = await response.text();
+   const text = await response.text();
 
-    parseDailyPage(text, selectedDate);
+console.log("선택 날짜:", formatDate(selectedDate));
+console.log("원본 페이지 내용:", text);
+
+parseDailyPage(text, selectedDate);
 
   } catch(err) {
 
