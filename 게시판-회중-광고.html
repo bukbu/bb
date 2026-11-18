@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport"
   content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
- <title>알림</title>
+ <title>회중광고</title>
 
 <style>
 
@@ -247,7 +247,7 @@ body.dark-mode .settings-panel .theme-btn.active {
 ===================================== */
 
 #content {
-  padding: 82px 8px 24px;
+  padding: 82px 8px 84px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -323,6 +323,36 @@ body.dark-mode .settings-panel .theme-btn.active {
   margin-top: 1.7em;
 }
 
+/* =====================================
+   광고별 음성 재생 버튼 스타일
+===================================== */
+
+.notice-play-button {
+  display: block;
+  width: 100%;
+  height: 46px;
+  margin: 14px 0 22px;
+  padding: 0;
+
+  border: 1px solid #9db2c4;
+  border-radius: 10px;
+
+  background: #234563;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+/* 어두운 모드에서도 동일하게 표시 */
+body.dark-mode .notice-play-button {
+  background: #234563;
+  color: #ffffff;
+  border-color: #9db2c4;
+}
+
 /* 휴대폰 화면 */
 @media (max-width: 600px) {
 
@@ -359,7 +389,45 @@ body.dark-mode #content .notice-section-title,
 body.dark-mode #content .notice-text {
   color: #f1f3f4;
 }
-    
+  
+/* =====================================
+   하단 고정 메뉴 3개
+===================================== */
+.group-top-buttons {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  background: #18324a;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.group-top-buttons button {
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.group-top-buttons button:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,.25);
+}
+
+/* 현재 페이지 버튼 */
+.group-top-buttons button.active {
+  background: #35536d;
+}
+  
 </style>
 </head>
 
@@ -368,13 +436,13 @@ body.dark-mode #content .notice-text {
   <header class="fixed-header">
 
     <!-- 뒤로가기 -->
-    <button type="button"
-      class="top-button back-button"
-      onclick="history.back()"
-      aria-label="뒤로가기">‹</button>
+   <button type="button"
+  class="top-button back-button"
+  onclick="location.href='index.html'"
+  aria-label="홈으로">‹</button>
 
     <!-- 가운데 제목 -->
-    <div class="main-title">알림</div>
+   <div class="main-title">회중광고</div>
 
     <!-- 설정 -->
     <button type="button"
@@ -428,7 +496,29 @@ body.dark-mode #content .notice-text {
   <main id="content">
   <p id="loadingMessage">알림을 불러오는 중입니다…</p>
 </main>
-  
+
+<!-- 하단 고정 메뉴 -->
+<div class="group-top-buttons">
+
+  <button type="button"
+    class="active"
+    aria-current="page"
+    onclick="location.href='게시판-회중-광고.html'">
+    광고
+  </button>
+
+  <button type="button"
+    onclick="location.href='게시판-회중-순방.html'">
+    순회방문
+  </button>
+
+  <button type="button"
+    onclick="location.href='게시판-회중-예비.html'">
+    예비
+  </button>
+
+</div>
+
 <script>
 
 /* 설정창 열기 / 닫기 */
@@ -566,7 +656,57 @@ function getMonthOrder(monthText) {
 }
 
 
-/* 날짜별 알림 불러오기 */
+/* =====================================
+   광고별 음성 읽기
+===================================== */
+
+let currentNoticeButton = null;
+
+/* 광고 읽기 시작 / 멈춤 */
+function toggleNoticeSpeech(button, text) {
+
+  // 현재 광고의 멈춤 버튼을 누른 경우
+  if (currentNoticeButton === button) {
+    window.speechSynthesis.cancel();
+
+    button.textContent = "▶ 재생";
+    currentNoticeButton = null;
+    return;
+  }
+
+  // 이전 광고 읽기 중단
+  window.speechSynthesis.cancel();
+
+  if (currentNoticeButton) {
+    currentNoticeButton.textContent = "▶ 재생";
+  }
+
+  // 읽을 내용 생성
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ko-KR";
+  utterance.rate = 0.8;
+  currentNoticeButton = button;
+  button.textContent = "■ 멈춤";
+
+  // 읽기 완료 또는 오류 시 버튼 원상복구
+  function resetButton() {
+    if (currentNoticeButton === button) {
+      button.textContent = "▶ 재생";
+      currentNoticeButton = null;
+    }
+  }
+
+  utterance.onend = resetButton;
+  utterance.onerror = resetButton;
+
+  window.speechSynthesis.speak(utterance);
+}
+
+
+/* =====================================
+   날짜별 알림 불러오기
+===================================== */
+
 function loadNotices(data) {
 
   const content = document.getElementById("content");
@@ -591,15 +731,21 @@ function loadNotices(data) {
 
     monthBox.appendChild(monthTitle);
 
-    // 해당 날짜의 제목과 본문
+    // 해당 날짜의 광고들
     (dateData.sections || []).forEach(section => {
 
-      // 회중용 등 제목 표시
+      // 광고 하나를 담는 별도 영역
+      const noticeBox = document.createElement("div");
+
+      // 광고 제목
       const sectionTitle = document.createElement("h3");
       sectionTitle.className = "notice-section-title";
       sectionTitle.textContent = section.title || "";
 
-      monthBox.appendChild(sectionTitle);
+      noticeBox.appendChild(sectionTitle);
+
+      // 해당 광고의 음성 읽기 내용
+      let speechText = section.title || "";
 
       // 본문을 시트 순서대로 표시
       (section.contents || []).forEach(text => {
@@ -615,7 +761,7 @@ function loadNotices(data) {
         // 본문 내용 유지
         paragraph.textContent = String(text);
 
-        // 2번, 3번 등 번호가 시작되는 본문에 간격 추가
+        // 2번, 3번 등 번호가 시작되는 본문 위에 간격 추가
         const numberMatch = String(text)
           .trim()
           .match(/^(\d+)\s*[.)]/);
@@ -624,9 +770,27 @@ function loadNotices(data) {
           paragraph.classList.add("numbered-notice");
         }
 
-        monthBox.appendChild(paragraph);
+        noticeBox.appendChild(paragraph);
+
+        // 음성 읽기 내용에 추가
+        speechText += "\n" + String(text);
 
       });
+
+      // 광고별 재생 버튼
+      const playButton = document.createElement("button");
+      playButton.type = "button";
+      playButton.className = "notice-play-button";
+      playButton.textContent = "▶ 재생";
+
+      playButton.onclick = function() {
+        toggleNoticeSpeech(playButton, speechText);
+      };
+
+      noticeBox.appendChild(playButton);
+
+      // 광고 하나를 날짜별 박스에 추가
+      monthBox.appendChild(noticeBox);
 
     });
 
@@ -636,7 +800,6 @@ function loadNotices(data) {
   });
 
 }
-
 function loadNoticesError() {
   document.getElementById("content").textContent =
     "알림을 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.";
@@ -652,8 +815,7 @@ function requestNotices() {
   document.body.appendChild(script);
 }
 
-requestNotices();
-  
+requestNotices(); 
 </script>
 
 </body>
