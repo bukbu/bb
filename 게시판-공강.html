@@ -1,169 +1,458 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <base target="_top">
   <meta charset="UTF-8">
-<meta name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
- <title>회중광고</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>게시판</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
-
-html {
-  touch-action: pan-x pan-y pinch-zoom;
-}
-
-body {
+    body {
   margin: 0;
+  padding: 0;
+  font-family: Arial, "Malgun Gothic", sans-serif;
+  color: #222;
+  background: #f3f4f6;
 }
 
-/* 위아래 이동 막대 숨기기 */
-html, body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.page {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: white;
+  padding-top: 62px;
+  overflow: hidden;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-  width: 0;
-}
-
-
-/* =====================================
-   상단 고정 메뉴
-===================================== */
+/* =========================
+   상단 고정 영역 개인봉사와 동일한 크기 기준
+========================= */
 .fixed-header {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-
+  width: 100%;
   height: 62px;
-  padding: 0 12px;
-
-  display: grid;
-  grid-template-columns: 48px 1fr 48px;
-  align-items: center;
-  gap: 10px;
-
-  background: #18324a;
-  color: #ffffff;
-
   box-sizing: border-box;
   z-index: 1000;
-}
-
-/* 상단 버튼 공통 */
-.top-button {
-  width: 42px;
-  height: 42px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding: 10px 14px;
+  background: #193650;
+  color: #fff;
+  text-align: center;
+  border-bottom: 0;
+}
+
+/* 상단 제목 */
+.main-title {
+  margin: 0;
   padding: 0;
 
-  background: #234563;
-  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 40px;
+  white-space: nowrap;
+}
 
-  border: 1px solid #9db2c4;
-  border-radius: 8px;
+/* 뒤로가기·설정 버튼 */
+.top-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 
-  cursor: pointer;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
   box-sizing: border-box;
+
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 12px;
+  background: #234563;
+  color: #fff;
+
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 /* 뒤로가기 버튼 */
 .back-button {
-  font-size: 25px;
-  font-weight: 400;
-}
-
-/* 가운데 제목 */
-.main-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-
-  color: #ffffff;
-
-  font-size: 30px;
-  font-weight: 900;
-
-  white-space: nowrap;
+  left: 14px;
 }
 
 /* 설정 버튼 */
 .settings-button {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-
-  width: 42px;
-  height: 42px;
-
-  font-size: 24px;
-  font-weight: 700;
+  right: 14px;
 }
 
-/* =====================================
+/* =========================
+   하단 메뉴 고정
+   화요일 구역과 동일한 방식
+========================= */
+
+.fixed-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 60px;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  background: #193650;
+  border-top: 1px solid rgba(255, 255, 255, .10);
+}
+
+/* 하단 메뉴 버튼 */
+.fixed-bottom button {
+  min-width: 0;
+  height: 59px;
+  box-sizing: border-box;
+
+  padding: 0 4px;
+  margin: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+  color: #fff;
+
+  font-family: Arial, "Malgun Gothic", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+/* 메뉴 사이 구분선 */
+.fixed-bottom button + button {
+  border-left: 1px solid rgba(255, 255, 255, .25);
+}
+
+/* 본문이 하단 메뉴에 가려지지 않도록 여백 확보 */
+
+#content {
+  position: absolute;
+  top: 62px;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 25px 8px 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+#content > h2:first-child {
+  margin-top: 0;
+}
+
+/* 공개강연 전체 박스 */
+.public-talk-box {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0 auto 22px;
+  padding: 16px;
+  border: 5px solid #d5e1ef;
+  border-radius: 22px;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #ffffff, #f7faff);
+  box-shadow: 0 6px 18px rgba(24, 50, 74, 0.08);
+}
+
+/* 박스 안 날짜 제목 */
+.public-talk-box h3 {
+  margin: 4px 0 20px;
+  padding: 14px 10px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #183b5c, #176b89);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-align: center;
+  overflow-wrap: anywhere;
+  box-shadow: 0 3px 8px rgba(24, 50, 74, 0.12);
+}
+    
+/* 박스 안 표 */
+.public-talk-box table {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  border: 1px solid #cbdcf0;
+  border-radius: 13px;
+  background: #ffffff;
+}
+
+/* 표 셀 */
+.public-talk-box th,
+.public-talk-box td {
+  padding: 14px 12px;
+  text-align: left;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  border-bottom: 1px solid #e2eaf3;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* 왼쪽 항목 */
+.public-talk-box th {
+  width: 28%;
+  background: #edf4fc;
+  color: #183b5c;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  border-right: 1px solid #dce7f5;
+}
+
+/* 오른쪽 내용 */
+.public-talk-box td {
+  background: #ffffff;
+  color: #243b53;
+  line-height: 1.7;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 12px;
+  overflow-wrap: anywhere;
+}
+
+/* 마지막 행의 아래 테두리 제거 */
+.public-talk-box tr:last-child th,
+.public-talk-box tr:last-child td {
+  border-bottom: 0;
+}
+
+/* 휴대폰 화면 */
+
+  .public-talk-box {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .public-talk-box h3 {
+    margin: 4px 0 16px;
+    padding: 12px 8px;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .public-talk-box th,
+  .public-talk-box td {
+    padding: 11px 8px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .public-talk-box th {
+    width: 36%;
+  }
+}
+
+
+  body {
+    padding: 0;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+   table {
+    min-width: 680px;
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 7px 4px;
+  }
+
+  .month-title {
+    font-size: 15px;
+  }
+}
+    
+    .month-section {
+      margin-bottom: 28px;
+    }
+
+    .month-title {
+      background: #9e9e9e;
+      color: white;
+      padding: 9px;
+      margin: 0;
+      font-size: 17px;
+      text-align: left;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #555;
+      padding: 7px 4px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #9e9e9e;
+      color: white;
+      font-weight: bold;
+    }
+
+    th:nth-child(1) { width: 12%; }
+    th:nth-child(2) { width: 12%; }
+    th:nth-child(3) { width: 14%; }
+    th:nth-child(4) { width: 28%; }
+    th:nth-child(5) { width: 12%; }
+    th:nth-child(6) { width: 11%; }
+    th:nth-child(7) { width: 11%; }
+
+    td:nth-child(1) {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    td:nth-child(4) {
+      text-align: left;
+    }
+
+    .loading, .empty, .error {
+      padding: 30px 10px;
+      text-align: center;
+      color: #666;
+    }
+
+    .error {
+      color: #c62828;
+    }
+
+    
+    /* 상단 뒤로가기 및 설정 버튼 */
+    .top-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      font-size: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .back-button {
+      left: 10px;
+    }
+
+    .settings-button {
+      right: 10px;
+    }
+
+
+/* =========================
    설정창
-===================================== */
+========================= */
+
 .settings-panel {
   display: none;
-
   position: fixed;
-  top: 70px;
-  right: 12px;
-
-  width: 230px;
-  max-width: calc(100vw - 24px);
-
-  padding: 12px;
-
+  top: 85px;
+  right: 14px;
+  width: 328px;
+  max-width: calc(100vw - 20px);
+  padding: 17px;
   z-index: 1100;
-
   border: 1px solid #dedfe5;
-  border-radius: 16px;
-
+  border-radius: 22px;
   background: #ffffff;
   color: #222222;
-
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
-
-  box-sizing: border-box;
+  box-shadow: 0 14px 32px rgba(0,0,0,.18);
 }
 
 .settings-panel.show {
   display: block;
 }
 
-/* 밝게 / 어둡게 */
+/* 테마 버튼 2개 */
+
 .settings-theme-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  margin-bottom: 7px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-/* 테마 버튼 */
 .theme-btn {
   min-width: 0;
-  height: 42px;
-
-  padding: 0 4px;
-
+  height: 59px;
+  padding: 0 6px;
   border: 1px solid #dce0e7;
-  border-radius: 11px;
-
+  border-radius: 16px;
   background: #f5f6f8;
   color: #222222;
-
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 800;
-
   cursor: pointer;
 }
 
@@ -173,299 +462,390 @@ body::-webkit-scrollbar {
   color: #40348d;
 }
 
-/* 글자 크기 */
+/* 글자 크기 버튼 3개 */
+
 .settings-font-row {
   display: grid;
-  grid-template-columns: 50px 1fr 50px;
-  gap: 7px;
+  grid-template-columns: 72px 1fr 72px;
+  gap: 10px;
   align-items: center;
 }
 
-/* 글자 크기 버튼 및 표시 */
 .font-btn,
 .font-size {
-  height: 42px;
+  height: 59px;
   min-width: 0;
-
   border: 1px solid #dce0e7;
-  border-radius: 11px;
-
+  border-radius: 16px;
   background: #f5f6f8;
   color: #222222;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-weight: 900;
 }
 
-/* 글자 작게 / 크게 */
 .font-btn {
-  font-size: 22px;
+  font-size: 30px;
   cursor: pointer;
 }
 
-/* 글자 크기 표시 */
 .font-size {
-  font-size: 15px;
+  font-size: 21px;
 }
 
-/* =====================================
-   어두운 모드
-===================================== */
-body.dark-mode {
-  background: #202124;
-  color: #f1f3f4;
-}
+/* 어두운 테마 */
 
-/* 어두운 모드 설정창 */
-body.dark-mode .settings-panel {
+.settings-panel.dark-mode {
   background: #202020;
   color: #f5f5f5;
   border-color: #404040;
 }
 
-/* 어두운 모드 버튼 */
-body.dark-mode .settings-panel .theme-btn,
-body.dark-mode .settings-panel .font-btn,
-body.dark-mode .settings-panel .font-size {
+
+/* 어두운 테마: 공개강연 본문 전체 */
+body.dark-mode #content {
+  color: #f1f3f4;
+}
+
+body.dark-mode #content h2,
+body.dark-mode #content .subtitle,
+body.dark-mode #content .loading,
+body.dark-mode #content .empty {
+  color: #f1f3f4;
+}
+
+body.dark-mode #content .public-talk-box {
+  background: #303134;
+  border-color: #50545a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* 박스 테두리: 테마별 색상 */
+/* 밝게: 조금 더 어두운 회색 */
+body:not(.dark-mode) #content .public-talk-box {
+  border-color: #AEB6BF;
+}
+
+/* 어둡게: 조금 더 밝은 회색 */
+body.dark-mode #content .public-talk-box {
+  border-color: #858585;
+}
+      
+body.dark-mode #content .talk-speaker-name,
+body.dark-mode #content .talk-topic-name,
+body.dark-mode #content .talk-role-name,
+body.dark-mode #content .public-talk-value {
+  color: #f1f3f4;
+}
+
+body.dark-mode #content .talk-small-label,
+body.dark-mode #content .talk-role-label,
+body.dark-mode #content .public-talk-label {
+  color: #b0b7c0;
+}
+
+body.dark-mode #content .talk-divider {
+  background: #555b63;
+}
+
+body.dark-mode #content .public-talk-details {
+  background: #303134;
+  border-color: #50545a;
+}
+
+body.dark-mode #content .public-talk-detail {
+  background: #303134;
+  border-color: #50545a;
+}
+
+body.dark-mode #content .public-talk-box h3 {
+  background: linear-gradient(120deg, #183b5c, #176b89);
+  color: #ffffff;
+}
+   
+.settings-panel.dark-mode .theme-btn,
+.settings-panel.dark-mode .font-btn,
+.settings-panel.dark-mode .font-size {
   background: #202020;
   color: #eeeeee;
   border-color: #505050;
 }
 
-/* 어두운 모드 선택 테마 */
-body.dark-mode .settings-panel .theme-btn.active {
+.settings-panel.dark-mode .theme-btn.active {
   background: #302b50;
   border-color: #7566ff;
   color: #ffffff;
 }
 
-/* =====================================
-   월별 알림
-===================================== */
+/* 작은 화면 */
 
-#content {
-  padding: 82px 8px 84px;
-  width: 100%;
-  box-sizing: border-box;
+@media (max-width: 360px) {
+  .settings-panel {
+    right: 10px;
+    padding: 12px;
+  }
+
+  .settings-font-row {
+    grid-template-columns: 58px 1fr 58px;
+    gap: 7px;
+  }
+
+  .theme-btn {
+    font-size: 16px;
+  }
+}
+      
+
+    /* 휴대폰 본문 여백 통일 */
+
+  #content {
+    padding: 25px 10px 80px;
+  }
 }
 
-/* 월별 전체 박스 - 공강 박스와 동일 */
-.notice-month {
-  width: 100%;
-  max-width: none;
-  min-width: 0;
-  margin: 0 auto 22px;
-  padding: 16px;
-
-  border: 5px solid #AEB6BF;
-  border-radius: 22px;
-
-  box-sizing: border-box;
-
-  background: linear-gradient(145deg, #ffffff, #f7faff);
-
-  box-shadow: 0 6px 18px rgba(24, 50, 74, 0.08);
-
-  color: #18324a;
+/* 연사 영역 */
+.talk-speaker-section {
+  padding: 4px 2px 16px;
 }
 
-/* 월 제목 */
-.notice-month-title {
-  margin: 4px 0 20px;
-  padding: 14px 10px;
 
-  border-radius: 14px;
+.talk-role-label {
+  color: #626970;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-wrap: anywhere;
+}
 
-  background: #68717D;
-  color: #ffffff;
 
-  font-size: 25px;
+.talk-speaker-name {
+  color: #18324A;
+  font-size: 20px;
   font-weight: 800;
   line-height: 1.5;
-  letter-spacing: 0.02em;
-  text-align: center;
-
-  overflow-wrap: anywhere;
-
-  box-shadow: 0 3px 8px rgba(24, 50, 74, 0.12);
 }
 
-/* 회중용 제목 */
-.notice-section-title {
-  margin: 12px 0 8px;
-
-  font-size: 22px;
-  font-weight: 900;
-  color: #183b5c;
-}
-
-/* 알림 내용 */
-.notice-text {
-  margin: 0 0 8px;
-
-  font-size: 20px;
-  line-height: 1.7;
-
-  color: #243b53;
-
-  /* 기록된 본문 줄바꿈 적용 */
-  white-space: pre-line;
-
-  /* 긴 문장 자동 줄바꿈 */
-  overflow-wrap: anywhere;
-}
-
-/* 2번, 3번 등 다음 번호 본문 위에 한 줄 간격 */
-.notice-text.numbered-notice {
-  margin-top: 1.7em;
-}
-
-/* =====================================
-   광고별 음성 재생 버튼 스타일
-===================================== */
-
-.notice-play-button {
-  display: block;
+/* 강연 주제 영역 */
+/* 밝은 테마: 조금 더 진한 회색 */
+.talk-divider {
+  height: 1px;
+  background: #9299A2;
   width: 100%;
-  height: 46px;
-  margin: 14px 0 22px;
-  padding: 0;
-
-  border: 1px solid #9db2c4;
-  border-radius: 10px;
-
-  background: #234563;
-  color: #ffffff;
-
-  font-size: 18px;
-  font-weight: 800;
-
-  cursor: pointer;
 }
 
-/* 어두운 모드에서도 동일하게 표시 */
-body.dark-mode .notice-play-button {
-  background: #234563;
-  color: #ffffff;
-  border-color: #9db2c4;
+/* 어두운 테마: 조금 더 밝은 회색 */
+body.dark-mode #content .talk-divider {
+  background: #858B94;
+}
+
+.talk-topic-section {
+  padding: 15px 2px 17px;
+}
+
+.talk-topic-name {
+  color: #18324A;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+
+/* 하단 3열 */
+.talk-roles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 8px;
+}
+
+.talk-role-item {
+  min-width: 0;
+  text-align: center;
+  padding: 0 5px;
+}
+
+
+.talk-role-item + .talk-role-item {
+  border-left: none;
+}
+
+.talk-role-label {
+  color: #858B94;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-wrap: anywhere;
+}
+
+.talk-role-name {
+  color: #243B53;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
 }
 
 /* 휴대폰 화면 */
 @media (max-width: 600px) {
-
-  .notice-month {
-    padding: 12px;
-    border-radius: 18px;
+  .talk-speaker-name {
+    padding: 12px 0;
   }
 
-  .notice-month-title {
-    margin: 4px 0 16px;
-    padding: 12px 8px;
-    font-size: 25px;
-    line-height: 1.4;
+  .talk-role-item {
+    padding: 0 3px;
+  }
+
+  .talk-role-label {
+    font-size: 15px !important;
+    min-height: 34px;
   }
 }
 
-/* =====================================
-   어두운 모드
-===================================== */
+    
+    /* 공개강연 항목: 한 칸으로 표시 */
+    .public-talk-details {
+      width: 100%;
+      border: 1px solid #cbdcf0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #ffffff;
+    }
 
-body.dark-mode #content .notice-month {
-  background: #303134;
-  border-color: #858585;
-  color: #f1f3f4;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    .public-talk-detail {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2eaf3;
+    }
+
+    .public-talk-detail:last-child {
+      border-bottom: 0;
+    }
+
+    /* 항목명: 작고 간단한 회색 글씨 */
+    .public-talk-label {
+      margin-bottom: 3px;
+      color: #858b94;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* 항목 내용 */
+    .public-talk-value {
+      color: #243b53;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 600px) {
+      .public-talk-detail {
+        padding: 9px 10px;
+      }
+
+      .public-talk-label {
+        font-size: 11px;
+      }
+
+      .public-talk-value {
+        font-size: 14px;
+      }
+    }
+    
+/* PC와 휴대폰 날짜 글자 크기 및 짙은 회색 배경 고정 */
+.public-talk-box h3 {
+  font-size: 25px !important;
+  background: #68717D !important;
+  color: #ffffff !important;
 }
 
-body.dark-mode #content .notice-month-title {
-  background: #68717D;
-  color: #ffffff;
-}
+.talk-role-label {
+  font-size: 15px !important;
+}   
+ 
+  </style>
+   
+  <script type="application/json" id="board-url-config">
+  {
+    "publicTalk": "게시판-공강.html",
+    "ministry": "게시판-생봉.html",
+    "groups": "게시판-집단.html"
+  }
+  </script>
 
-body.dark-mode #content .notice-section-title,
-body.dark-mode #content .notice-text {
-  color: #f1f3f4;
-}
-  
-/* =====================================
-   하단 고정 메뉴 3개
-===================================== */
-.group-top-buttons {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 60px;
-  z-index: 1000;
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-
-  background: #18324a;
-  border-top: 1px solid rgba(255,255,255,.10);
-}
-
-.group-top-buttons button {
-  border: 0;
-  background: transparent;
-  color: #ffffff;
-
-  font-size: 20px;
-  font-weight: 700;
-
-  cursor: pointer;
-}
-
-.group-top-buttons button:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,.25);
-}
-
-/* 현재 페이지 버튼 */
-.group-top-buttons button.active {
-  background: #35536d;
-}
-  
-</style>
 </head>
 
 <body>
+  <div class="page">
 
-  <header class="fixed-header">
+    
+<header class="fixed-header">
+  
+<button type="button" class="top-button back-button"
+  onclick="location.href='index.html'" aria-label="홈으로">‹</button>
 
- <!-- 홈으로 이동 -->
-<button type="button"
-  class="top-button back-button"
-  onclick="window.location.replace('https://sungnb.github.io/bb2/index.html')"
-  aria-label="홈으로">‹</button>
 
-    <!-- 가운데 제목 -->
-   <div class="main-title">회중광고</div>
+  <div class="main-title">북부회중 게시판</div>
 
-    <!-- 설정 -->
-    <button type="button"
-      class="top-button settings-button"
-      onclick="toggleSettings()"
-      aria-label="설정">⚙</button>
+  <button type="button" class="top-button settings-button"
+    onclick="toggleSettings()" aria-label="설정">⚙</button>
+</header>
 
-  </header>
 
-  <!-- 설정창 -->
+    <main id="content">
+      <div class="loading">
+        아래의 공개강연 메뉴를 눌러 일정을 확인하세요.
+      </div>
+    </main>
+
+    <!-- 아래쪽 고정 메뉴 -->
+    <nav class="fixed-bottom">
+      <button
+        type="button"
+        onclick="showSection('publicTalk')">
+        공개강연
+      </button>
+
+      <button
+        type="button"
+        onclick="showSection('ministry')">
+        생활과봉사
+      </button>
+
+      <button
+        type="button"
+        onclick="showSection('groups')">
+        집단및부서
+      </button>
+    </nav>
+
+  </div>
+
+   <!-- 설정창 -->
   <div id="settingsPanel" class="settings-panel">
 
-    <!-- 밝게 / 어둡게 -->
     <div class="settings-theme-row">
 
-      <button type="button"
+      <button
+        type="button"
         id="lightBtn"
         class="theme-btn"
         onclick="setTheme('light')">
         ☀ 밝게
       </button>
 
-      <button type="button"
+      <button
+        type="button"
         id="darkBtn"
         class="theme-btn"
         onclick="setTheme('dark')">
@@ -474,349 +854,606 @@ body.dark-mode #content .notice-text {
 
     </div>
 
-    <!-- 글자 크기 -->
     <div class="settings-font-row">
 
-      <button type="button"
+      <button
+        type="button"
         class="font-btn"
         onclick="changeFont(-10)"
-        aria-label="글자 작게">−</button>
+        aria-label="글자 작게">
+        −
+      </button>
 
-      <div id="fontSize" class="font-size">100%</div>
+      <div
+        id="fontSize"
+        class="font-size">
+        120%
+      </div>
 
-      <button type="button"
+      <button
+        type="button"
         class="font-btn"
         onclick="changeFont(10)"
-        aria-label="글자 크게">＋</button>
+        aria-label="글자 크게">
+        ＋
+      </button>
 
     </div>
 
   </div>
 
-  <main id="content">
-  <p id="loadingMessage">알림을 불러오는 중입니다…</p>
-</main>
+  <script>
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbyEfXPJL3SuEApms97-_hjqlhetsEhV_Mc70RMgrOmYD_GqfMF8HiZazbaJf0F6PNmdlg/exec";
 
-<!-- 하단 고정 메뉴 -->
-<div class="group-top-buttons">
 
-  <button type="button"
-    class="active"
-    aria-current="page"
-    onclick="location.href='게시판-회중-광고.html'">
-    광고
-  </button>
+    let scheduleTimeout;
 
-  <button type="button"
-    onclick="location.href='게시판-회중-순방.html'">
-    순회방문
-  </button>
+    /* 설정창 열기 / 닫기 */
+    function toggleSettings() {
+      const panel = document.getElementById("settingsPanel");
 
-  <button type="button"
-    onclick="location.href='게시판-회중-예비.html'">
-    예비
-  </button>
+      if (!panel) return;
 
-</div>
-
-<script>
-
-/* 설정창 열기 / 닫기 */
-function toggleSettings() {
-  document.getElementById("settingsPanel")
-    .classList.toggle("show");
-}
-
-/* 글자 크기 */
-let fontPercent = 100;
-
-/* 테마 설정 */
-function setTheme(theme) {
-
-  const isLight = theme === "light";
-
-  document.body.classList.toggle(
-    "dark-mode",
-    !isLight
-  );
-
-  document.getElementById("lightBtn")
-    .classList.toggle("active", isLight);
-
-  document.getElementById("darkBtn")
-    .classList.toggle("active", !isLight);
-
-  localStorage.setItem(
-    "northBoardTheme",
-    theme
-  );
-}
-
-/* 글자 크기 설정 */
-function setFontPercent(percent) {
-
-  fontPercent = Math.max(
-    80,
-    Math.min(150, percent)
-  );
-
-  document.getElementById("fontSize")
-    .textContent = fontPercent + "%";
-
-  document.querySelector("main").style.zoom =
-    fontPercent + "%";
-
-  localStorage.setItem(
-    "northBoardFontPercent",
-    String(fontPercent)
-  );
-}
-
-/* 글자 크기 변경 */
-function changeFont(amount) {
-
-  setFontPercent(fontPercent + amount);
-
-}
-
-/* 저장된 설정 불러오기 */
-(function restoreSettings() {
-
-  const savedTheme =
-    localStorage.getItem("northBoardTheme");
-
-  const savedFont =
-    Number(localStorage.getItem("northBoardFontPercent"));
-
-  setTheme(
-    savedTheme === "light"
-      ? "light"
-      : "dark"
-  );
-
-  setFontPercent(
-    Number.isFinite(savedFont) &&
-    savedFont >= 80 &&
-    savedFont <= 150
-      ? savedFont
-      : 100
-  );
-
-})();
-
- 
-/* =====================================
-   월별 알림 불러오기
-===================================== */
-
-const NOTICE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbw9sb0RrJiyi_4vz-Qzt1SYWjmTTrSOy6DDpyySLSNmZQpkOFLyC3gkPFiG7A4Qnd5g/exec";
-
-/* 날짜 추출 */
-function getLatestNoticeDate(text) {
-
-  const value = String(text || "");
-  const dates = [];
-
-  const regex =
-    /(\d{4})\s*년\s*(\d{1,2})\s*월\s*(\d{1,2})\s*일/g;
-
-  let match;
-
-  while ((match = regex.exec(value)) !== null) {
-
-    const year = Number(match[1]);
-    const month = Number(match[2]);
-    const day = Number(match[3]);
-
-    const date = new Date(year, month - 1, day);
-
-    if (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    ) {
-      dates.push(date.getTime());
+      panel.classList.toggle("show");
     }
-  }
 
-  return dates.length ? Math.max(...dates) : null;
-}
+  
+  /* 화면 테마 변경 */
+  function setTheme(theme) {
+    const isLight = theme === "light";
+    const panel = document.getElementById("settingsPanel");
+    const lightBtn = document.getElementById("lightBtn");
+    const darkBtn = document.getElementById("darkBtn");
 
-/* 월 제목 정렬 기준 */
-function getMonthOrder(monthText) {
+    document.body.classList.toggle("light-mode", isLight);
+    document.body.classList.toggle("dark-mode", !isLight);
 
-  const match = String(monthText || "").match(
-    /(\d{4})\s*년\s*(\d{1,2})\s*월/
-  );
-
-  return match
-    ? Number(match[1]) * 100 + Number(match[2])
-    : 0;
-}
-
-
-/* =====================================
-   광고별 음성 읽기
-===================================== */
-
-let currentNoticeButton = null;
-
-/* 광고 읽기 시작 / 멈춤 */
-function toggleNoticeSpeech(button, text) {
-
-  // 현재 광고의 멈춤 버튼을 누른 경우
-  if (currentNoticeButton === button) {
-    window.speechSynthesis.cancel();
-
-    button.textContent = "▶ 재생";
-    currentNoticeButton = null;
-    return;
-  }
-
-  // 이전 광고 읽기 중단
-  window.speechSynthesis.cancel();
-
-  if (currentNoticeButton) {
-    currentNoticeButton.textContent = "▶ 재생";
-  }
-
-  // 읽을 내용 생성
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ko-KR";
-  utterance.rate = 0.8;
-  currentNoticeButton = button;
-  button.textContent = "■ 멈춤";
-
-  // 읽기 완료 또는 오류 시 버튼 원상복구
-  function resetButton() {
-    if (currentNoticeButton === button) {
-      button.textContent = "▶ 재생";
-      currentNoticeButton = null;
+    if (panel) {
+      panel.classList.toggle("light-mode", isLight);
+      panel.classList.toggle("dark-mode", !isLight);
     }
-  }
 
-  utterance.onend = resetButton;
-  utterance.onerror = resetButton;
+    if (lightBtn) {
+      lightBtn.classList.toggle("active", isLight);
+    }
 
-  window.speechSynthesis.speak(utterance);
-}
+    if (darkBtn) {
+      darkBtn.classList.toggle("active", !isLight);
+    }
 
+    document.body.style.background =
+      isLight ? "#f3f4f6" : "#202124";
 
-/* =====================================
-   날짜별 알림 불러오기
-===================================== */
+    document.body.style.color =
+      isLight ? "#222222" : "#f1f3f4";
 
-function loadNotices(data) {
-
-  const content = document.getElementById("content");
-  content.innerHTML = "";
-
-  if (!Array.isArray(data) || data.length === 0) {
-    content.textContent = "등록된 알림이 없습니다.";
-    return;
-  }
-
-  // 시트에 작성된 순서 그대로 표시
-  data.forEach(dateData => {
-
-    // 날짜별 알림 박스 생성
-    const monthBox = document.createElement("section");
-    monthBox.className = "notice-month";
-
-    // 날짜 제목
-    const monthTitle = document.createElement("h2");
-    monthTitle.className = "notice-month-title";
-    monthTitle.textContent = dateData.month || "";
-
-    monthBox.appendChild(monthTitle);
-
-    // 해당 날짜의 광고들
-    (dateData.sections || []).forEach(section => {
-
-      // 광고 하나를 담는 별도 영역
-      const noticeBox = document.createElement("div");
-
-      // 광고 제목
-      const sectionTitle = document.createElement("h3");
-      sectionTitle.className = "notice-section-title";
-      sectionTitle.textContent = section.title || "";
-
-      noticeBox.appendChild(sectionTitle);
-
-      // 해당 광고의 음성 읽기 내용
-      let speechText = section.title || "";
-
-      // 본문을 시트 순서대로 표시
-      (section.contents || []).forEach(text => {
-
-        // 빈 내용은 표시하지 않음
-        if (!String(text || "").trim()) {
-          return;
-        }
-
-        const paragraph = document.createElement("p");
-        paragraph.className = "notice-text";
-
-        // 본문 내용 유지
-        paragraph.textContent = String(text);
-
-        // 2번, 3번 등 번호가 시작되는 본문 위에 간격 추가
-        const numberMatch = String(text)
-          .trim()
-          .match(/^(\d+)\s*[.)]/);
-
-        if (numberMatch && Number(numberMatch[1]) >= 2) {
-          paragraph.classList.add("numbered-notice");
-        }
-
-        noticeBox.appendChild(paragraph);
-
-        // 음성 읽기 내용에 추가
-        speechText += "\n" + String(text);
-
-      });
-
-      // 광고별 재생 버튼
-      const playButton = document.createElement("button");
-      playButton.type = "button";
-      playButton.className = "notice-play-button";
-      playButton.textContent = "▶ 재생";
-
-      playButton.onclick = function() {
-        toggleNoticeSpeech(playButton, speechText);
-      };
-
-      noticeBox.appendChild(playButton);
-
-      // 광고 하나를 날짜별 박스에 추가
-      monthBox.appendChild(noticeBox);
-
+    document.querySelectorAll("#content div").forEach(element => {
+      if (element.textContent.trim().startsWith("연사 :")) {
+        element.style.color =
+          isLight ? "#243B53" : "#F1F3F4";
+      }
     });
 
-    // 날짜별 박스를 시트 순서대로 추가
-    content.appendChild(monthBox);
+    const page = document.querySelector(".page");
 
+    if (page) {
+      page.style.background =
+        isLight ? "#ffffff" : "#303134";
+    }
+
+    document.querySelectorAll("table td").forEach(cell => {
+      cell.style.background = isLight ? "" : "#303134";
+      cell.style.color = isLight ? "" : "#f1f3f4";
+    });
+
+    localStorage.setItem("bukbu_theme", theme);
+    localStorage.setItem("northBoardTheme", theme);
+  }
+    /* 글자 크기 변경: 기본 120%, 최소 80%, 최대 150% */
+    let fontPercent = 120;
+
+    function setFontPercent(percent) {
+      fontPercent = Math.max(80, Math.min(150, percent));
+
+      document.documentElement.style.setProperty(
+        "--font-scale",
+        String(fontPercent / 100)
+      );
+
+      const display = document.getElementById("fontSize");
+      if (display) {
+        display.textContent = fontPercent + "%";
+      }
+
+     
+/* 설정 글자 크기를 본문 전체에 적용 */
+const content = document.getElementById("content");
+
+if (content) {
+  content.style.setProperty(
+    "--board-font-scale",
+    String(fontPercent / 100)
+  );
+
+  content.querySelectorAll("*").forEach(element => {
+    if (!element.dataset.originalFontSize) {
+      element.dataset.originalFontSize =
+        parseFloat(getComputedStyle(element).fontSize);
+    }
+
+    element.style.fontSize =
+      (
+        Number(element.dataset.originalFontSize) *
+        fontPercent / 100
+      ) + "px";
   });
-
-}
-function loadNoticesError() {
-  document.getElementById("content").textContent =
-    "알림을 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.";
 }
 
-function requestNotices() {
+
+      localStorage.setItem("northBoardFontPercent", String(fontPercent));
+    }
+
+    function changeFont(amount) {
+      setFontPercent(fontPercent + amount);
+    }
+
+  /* 저장된 설정 복원 */
+(function restoreSettings() {
+  // 메인 페이지에서 선택한 테마를 우선 적용
+  const savedTheme =
+    localStorage.getItem("bukbu_theme") ||
+    localStorage.getItem("northBoardTheme");
+
+  const savedFont = Number(
+    localStorage.getItem("northBoardFontPercent")
+  );
+
+  setTheme(savedTheme === "light" ? "light" : "dark");
+
+  if (Number.isFinite(savedFont) && savedFont >= 80 && savedFont <= 150) {
+    setFontPercent(savedFont);
+  } else {
+    setFontPercent(120);
+  }
+})();
+
+    /* =====================================================
+       게시판 주소 설정 읽기 및 페이지 이동
+    ===================================================== */
+
+    async function goBoardPage(section) {
+      try {
+        const response = await fetch(
+          "게시판-공강.html",
+          { cache: "no-store" }
+        );
+
+        if (!response.ok) {
+          throw new Error("주소 설정을 읽지 못했습니다.");
+        }
+
+        const html = await response.text();
+
+        const doc = new DOMParser().parseFromString(
+          html,
+          "text/html"
+        );
+
+        const configElement =
+          doc.getElementById("board-url-config");
+
+        if (!configElement) {
+          throw new Error("주소 설정을 찾지 못했습니다.");
+        }
+
+        const boardUrls = JSON.parse(
+          configElement.textContent
+        );
+
+        if (!boardUrls[section]) {
+          throw new Error("해당 페이지 주소가 없습니다.");
+        }
+
+        window.location.href = boardUrls[section];
+
+      } catch (error) {
+        alert("페이지 이동에 실패했습니다. 다시 시도해 주세요.");
+        console.error(error);
+      }
+    }
+
+    /* =====================================================
+       하단 메뉴 선택
+    ===================================================== */
+    function showSection(section) {
+      const content = document.getElementById("content");
+
+      if (section === "publicTalk") {
+        loadSchedule();
+        return;
+      }
+
+      clearTimeout(scheduleTimeout);
+
+      const oldScript = document.getElementById("scheduleJsonp");
+
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+      content.innerHTML = "";
+
+      const message = document.createElement("div");
+      message.className = "loading";
+
+    
+      if (section === "ministry") {
+        goBoardPage("ministry");
+        return;
+      } else if (section === "groups") {
+        goBoardPage("groups");
+        return;
+      }
+
+      content.appendChild(message);
+    }
+    
+/* =====================================================
+   공개강연 일정 불러오기
+===================================================== */
+function loadSchedule() {
+  const content = document.getElementById("content");
+
+  content.innerHTML =
+    '<div class="loading" id="scheduleLoadingMessage">' +
+    '공개강연 일정을 불러오는 중입니다...</div>';
+
+  clearTimeout(scheduleTimeout);
+
+  scheduleTimeout = setTimeout(function() {
+    showError({
+      message:
+        "응답 시간이 초과되었습니다. Apps Script 배포를 확인해 주세요."
+    });
+  }, 20000);
+
+  const oldScript = document.getElementById("scheduleJsonp");
+
+  if (oldScript) {
+    oldScript.remove();
+  }
+
   const script = document.createElement("script");
-  script.src =
-    NOTICE_SCRIPT_URL +
-    "?prefix=loadNotices&v=" + Date.now();
+  script.id = "scheduleJsonp";
 
-  script.onerror = loadNoticesError;
+  script.onerror = function() {
+    clearTimeout(scheduleTimeout);
+
+    showError({
+      message: "Apps Script에 연결하지 못했습니다."
+    });
+  };
+
+  script.src =
+    SCRIPT_URL + "?prefix=receiveSchedule&t=" + Date.now();
+
   document.body.appendChild(script);
 }
 
-requestNotices(); 
-</script>
+    /* =====================================================
+       Apps Script 응답 처리
+    ===================================================== */
+    function receiveSchedule(data) {
+      clearTimeout(scheduleTimeout);
 
+      if (!Array.isArray(data)) {
+        showError({
+          message: "서버에서 받은 데이터 형식이 올바르지 않습니다."
+        });
+
+        return;
+      }
+
+      renderSchedule(data);
+    }
+
+    /* =====================================================
+       공개 집회 강연 계획표 표시
+    ===================================================== */
+
+
+function renderSchedule(data) {
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  // 현재 날짜가 포함된 달 계산
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+
+  
+const title = document.createElement("h2");
+title.textContent = "공개 집회 강연 계획표";
+title.style.textAlign = "center";
+title.style.marginTop = "0";
+title.style.marginBottom = "10px";
+title.style.fontSize = "30px";
+title.style.fontWeight = "800";
+content.appendChild(title);
+
+
+  const subtitle = document.createElement("div");
+  subtitle.textContent = "토요일 오후 7:30";
+  subtitle.style.textAlign = "center";
+  subtitle.style.fontWeight = "bold";
+  subtitle.style.marginBottom = "20px";
+  content.appendChild(subtitle);
+
+
+  // ==========================================
+  // 표시할 예정 일정 개수
+  // 이 숫자만 바꾸면 표시 개수가 변경됩니다.
+  // ==========================================
+  const DISPLAY_COUNT = 8;
+
+
+  // ==========================================
+  // 이번 주 토요일부터 예정 일정을 표시
+  // 월이 바뀌어도 날짜순으로 계속 표시
+  // ==========================================
+  const today = new Date();
+
+  today.setHours(0, 0, 0, 0);
+
+ // 월요일부터 토요일까지는 이번 주 토요일,
+// 일요일에는 전날 토요일 일정을 표시
+const daysUntilSaturday =
+  today.getDay() === 0
+    ? -1
+    : (6 - today.getDay() + 7) % 7;
+
+  const firstDate = new Date(today);
+
+  firstDate.setDate(
+    today.getDate() + daysUntilSaturday
+  );
+
+
+  // 예정 날짜만 가져와 날짜순으로 정렬하고
+  // 설정한 개수만큼 표시
+  const monthlyItems = data
+    .filter(row => {
+      const rowDate = new Date(
+        Number(row.year),
+        Number(row.month) - 1,
+        Number(row.day)
+      );
+
+      rowDate.setHours(0, 0, 0, 0);
+
+      return rowDate >= firstDate;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(
+        Number(a.year),
+        Number(a.month) - 1,
+        Number(a.day)
+      );
+
+      const dateB = new Date(
+        Number(b.year),
+        Number(b.month) - 1,
+        Number(b.day)
+      );
+
+      return dateA - dateB;
+    })
+    .slice(0, DISPLAY_COUNT);
+
+  if (monthlyItems.length === 0) {
+    const message = document.createElement("div");
+    message.className = "empty";
+    message.textContent =
+      year + "년 " + month + "월 일정이 시트에 없습니다.";
+    content.appendChild(message);
+    return;
+  }
+
+  // 각 날짜별 일정을 하나의 둥근 박스로 표시
+  monthlyItems.forEach(item => {
+    const box = document.createElement("section");
+    box.className = "public-talk-box";
+    box.style.marginBottom = "24px";
+
+    // 날짜 제목
+    const dateTitle = document.createElement("h3");
+
+    const date = new Date(
+      Number(item.year),
+      Number(item.month) - 1,
+      Number(item.day)
+    );
+
+    const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+
+   dateTitle.textContent =
+      item.year + "년 " +
+      item.month + "월 " +
+      item.day + "일 (" +
+      weekdays[date.getDay()] + ")";
+
+    // 이번 주 월요일부터 일요일까지 골드 색상 적용
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const thisMonday = new Date(today);
+const day = today.getDay();
+
+thisMonday.setDate(
+  today.getDate() - (day === 0 ? 6 : day - 1)
+);
+
+const nextMonday = new Date(thisMonday);
+nextMonday.setDate(thisMonday.getDate() + 7);
+
+const isThisWeek =
+  date >= thisMonday &&
+  date < nextMonday;
+
+if (isThisWeek) {
+  dateTitle.style.setProperty(
+    "background",
+    "#294F70",
+    "important"
+  );
+}
+    
+    box.appendChild(dateTitle);
+
+    // 회중 이름 정리
+    const congregation = String(item.congregation || "")
+      .replace(/\s*회중\s*$/, "")
+      .trim();
+
+   
+    // 연사 정보: 연사 이름이 있을 때만 표시
+    const speakerName = String(item.speaker || "").trim();
+
+    const speakerSection = document.createElement("div");
+
+    if (congregation || speakerName) {
+      speakerSection.style.padding = "4px 2px 6px";
+      speakerSection.style.fontSize = "18px";
+      speakerSection.style.fontWeight = "500";
+      speakerSection.style.color =
+      document.body.classList.contains("dark-mode")
+    ? "#F1F3F4"
+    : "#243B53";
+      speakerSection.style.lineHeight = "1.5";
+      speakerSection.style.whiteSpace = "nowrap";
+      speakerSection.style.overflowX = "auto";
+
+      const speakerLine = document.createElement("div");
+
+      speakerLine.textContent =
+        "연사 : " +
+        (congregation ? congregation + " 회중 " : "") +
+        speakerName;
+
+      speakerSection.appendChild(speakerLine);
+      box.appendChild(speakerSection);
+    }
+
+    // 강연 제목: 원본에 있는 줄바꿈 유지
+    // 한 줄이면 한 줄, 여러 줄이면 여러 줄로 표시
+    const topicSection = document.createElement("div");
+
+    topicSection.style.padding = "3px 2px 16px";
+    topicSection.style.fontSize = "20px";
+    topicSection.style.fontWeight = "800";
+    topicSection.style.lineHeight = "1.5";
+    topicSection.style.whiteSpace = "pre-line";
+    topicSection.style.overflowWrap = "anywhere";
+
+    const topicName = document.createElement("div");
+    topicName.textContent = item.topic || "";
+
+    topicSection.appendChild(topicName);
+    box.appendChild(topicSection);
+
+    // 하단 3열 영역
+    const roles = [
+      {
+        label: "공개강연 사회",
+        value: item.chairman || ""
+      },
+      {
+        label: "파수대 낭독",
+        value: item.reader || ""
+      },
+      {
+        label: "마치는 기도",
+        value: item.prayer || ""
+      }
+    ];
+
+    // 이름 끝의 '형제'를 제거한 실제 이름 확인
+    const hasAnyRole = roles.some(role =>
+      String(role.value || "")
+        .replace(/\s*형제\s*$/, "")
+        .trim() !== ""
+    );
+
+    // 세 항목 중 하나라도 이름이 있을 때만
+    // 가로 실선과 3열 전체 표시
+    if (hasAnyRole) {
+
+      // 강연 제목 아래 가로 실선
+      const divider2 = document.createElement("div");
+      divider2.className = "talk-divider";
+      box.appendChild(divider2);
+
+      // 하단 3열 영역
+      const rolesSection = document.createElement("div");
+      rolesSection.className = "talk-roles";
+
+      roles.forEach(role => {
+        const roleItem = document.createElement("div");
+        roleItem.className = "talk-role-item";
+
+        const roleLabel = document.createElement("div");
+        roleLabel.className = "talk-role-label";
+        roleLabel.textContent = role.label;
+
+        const roleName = document.createElement("div");
+        roleName.className = "talk-role-name";
+
+        // 이름 끝의 '형제'만 삭제
+        roleName.textContent = String(role.value || "")
+          .replace(/\s*형제\s*$/, "")
+          .trim();
+
+        roleItem.appendChild(roleLabel);
+        roleItem.appendChild(roleName);
+        rolesSection.appendChild(roleItem);
+      });
+
+      box.appendChild(rolesSection);
+    }
+
+    content.appendChild(box);
+  });
+}
+
+    /* =====================================================
+       오류 표시
+    ===================================================== */
+    function showError(error) {
+      const content = document.getElementById("content");
+
+      content.innerHTML = "";
+
+      const message = document.createElement("div");
+      message.className = "error";
+
+      message.textContent =
+        "일정을 불러오지 못했습니다: " +
+        (error && error.message
+          ? error.message
+          : "알 수 없는 오류");
+
+           content.appendChild(message);
+    }
+
+    /* 페이지를 열면 공개강연 일정 자동 표시 */
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+        showSection("publicTalk");
+      }
+    );
+    
+  </script>
 </body>
 </html>
