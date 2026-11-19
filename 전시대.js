@@ -6127,10 +6127,15 @@ function addGroup() {
             성신여대(주변)
           </option>
 
-          <option value="가두 증거">
-            가두 증거
+          <option value="가두(유타몰)">
+            가두증거(유타몰)
           </option>
 
+          <option value="가두(구청광장)">
+            가두증거(구청광장)
+          
+          </option>
+          
         </select>
 
       </div>
