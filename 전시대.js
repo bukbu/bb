@@ -5784,14 +5784,14 @@ function addGroup() {
      미배정 봉사자 수를 그대로 사용
   */
 
-  const selectedCount =
+   const selectedCount =
     selectedApplicants.length;
 
   if (
-    ![4, 5, 6, 7].includes(selectedCount)
+    selectedCount < 2
   ) {
     alert(
-      "미배정에서 4~7명의 봉사자를 먼저 선택해 주세요."
+      "미배정에서 2명 이상의 봉사자를 먼저 선택해 주세요."
     );
     return;
   }
