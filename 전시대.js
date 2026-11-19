@@ -8835,9 +8835,8 @@ title.className =
   "service-appointment-title";
 
 title.textContent =
-  group.location === "가두 증거"
-    ? "📋 가두증거 임명 (" + count + "명)"
-    : "📋 전시대 임명 (" + count + "명)";
+  "📋 전시대 임명 (" + count + "명)";
+       
 card.appendChild(
   title
 );
@@ -8960,7 +8959,7 @@ card.appendChild(
 ----------------------------------------------------- */
 
 if (
-  group.location === "가두 증거"
+  String(group.location || "").includes("가두 증거")
 ) {
 
   const cartMembers =
