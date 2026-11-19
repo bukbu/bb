@@ -6139,6 +6139,9 @@ function addGroup() {
           <option value="가두 증거(보문역 주변)">
             가두(보문역)
             
+           <option value="가두 증거">
+            가두 증거
+            
           </option>
           
         </select>
@@ -7528,6 +7531,14 @@ locationLabel.textContent =
 
         "성신여대(주변)",
 
+        "가두 증거(유타몰)",
+
+        "가두 증거(구청광장)",
+
+        "가두 증거(보문2교 주변)",
+
+        "가두 증거(보문역 주변)",
+
         "가두 증거"
 
       ];
@@ -8835,7 +8846,9 @@ title.className =
   "service-appointment-title";
 
 title.textContent =
-  "📋 전시대 임명 (" + count + "명)";
+  String(group.location || "").includes("가두 증거")
+    ? "📋 가두 증거 임명 (" + count + "명)"
+    : "📋 전시대 임명 (" + count + "명)";
        
 card.appendChild(
   title
@@ -8977,12 +8990,12 @@ if (
   cartMembers.style.padding =
     "12px 0";
 
-  cartMembers.textContent =
+   cartMembers.textContent =
     members
       .filter(function(name) {
         return String(name || "").trim();
       })
-      .join(" ");
+      .join(", ");
 
   card.appendChild(
     cartMembers
