@@ -5610,10 +5610,9 @@ async function cleanGroups() {
          기본값 4명으로 보정한다.
       */
 
-      if (
-        ![4, 5, 6, 7].includes(
-          Number(group.count)
-        )
+            if (
+        Number(group.count) < 2 ||
+        Number(group.count) > 7
       ) {
 
         group.count = 4;
@@ -6621,11 +6620,12 @@ if (countEl) {
       locationEl.value || ""
     ).trim();
 
-  if (
-    ![4, 5, 6, 7].includes(count)
+   if (
+    count < 2 ||
+    count > 7
   ) {
     alert(
-      "인원을 선택해 주세요."
+      "2명부터 7명까지 선택해 주세요."
     );
     return;
   }
@@ -6954,12 +6954,13 @@ function renderGroups() {
         group.members = [];
       }
 
-      if (
-        ![4, 5, 6, 7].includes(
-          Number(group.count)
-        )
+            if (
+        Number(group.count) < 2 ||
+        Number(group.count) > 7
       ) {
+
         group.count = 4;
+
       }
 
 
@@ -8792,12 +8793,13 @@ function addMinutesToTime(
         members.length;
 
 
-      if (
-        ![4, 5, 6, 7].includes(
-          count
-        )
+           if (
+        Number(group.count) < 2 ||
+        Number(group.count) > 7
       ) {
-        return;
+
+        group.count = 4;
+
       }
 
 
@@ -8827,10 +8829,9 @@ title.className =
   "service-appointment-title";
 
 title.textContent =
-  "📋 전시대 임명 (" +
-  count +
-  "명)";
-
+  group.location === "가두 증거"
+    ? "📋 가두증거 임명 (" + count + "명)"
+    : "📋 전시대 임명 (" + count + "명)";
 card.appendChild(
   title
 );
@@ -8945,6 +8946,50 @@ time.innerHTML =
 card.appendChild(
   time
 );
+
+/* -----------------------------------------------------
+   가두증거 그룹 특별 표시
+   - 2명부터 7명
+   - 일반 시간표 표시하지 않음
+----------------------------------------------------- */
+
+if (
+  group.location === "가두 증거"
+) {
+
+  const cartMembers =
+    document.createElement("div");
+
+  cartMembers.className =
+    "service-appointment-rows";
+
+  cartMembers.style.textAlign =
+    "center";
+
+  cartMembers.style.fontWeight =
+    "700";
+
+  cartMembers.style.padding =
+    "12px 0";
+
+  cartMembers.textContent =
+    members
+      .filter(function(name) {
+        return String(name || "").trim();
+      })
+      .join(" ");
+
+  card.appendChild(
+    cartMembers
+  );
+
+  list.appendChild(
+    card
+  );
+
+  return;
+
+}
 
 /* -----------------------------------------------------
    구분선
